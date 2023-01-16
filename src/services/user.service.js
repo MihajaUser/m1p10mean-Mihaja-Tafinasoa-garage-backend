@@ -1,10 +1,11 @@
 import pkg from "bcryptjs";
+import config from "config";
+import jwt from "jsonwebtoken";
 import {
   findCandidateByUsername,
   insertUserMdl,
 } from "../models/user.model.js";
-import config from "config";
-import jwt from "jsonwebtoken";
+import { confirmRegistrationMailSvc } from "./mail.service.js";
 
 const { genSalt, hash, compare } = pkg;
 
@@ -13,7 +14,9 @@ export const insertUserSvc = async (user) => {
     const salt = await genSalt(10);
     const hashed = await hash(user.password, salt);
     user.password = hashed;
-    user = insertUserMdl(user);
+    await insertUserMdl(user);
+    console.log("__________", user);
+    confirmRegistrationMailSvc(user);
   } catch (error) {
     console.log(error);
   }
