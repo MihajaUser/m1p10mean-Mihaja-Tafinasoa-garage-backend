@@ -2,5 +2,13 @@
   "server": {
     "host": "localhost",
     "port": 3000
+  },
+  "database": {
+    "uri": "mongodb+srv://Mihaja:sasukeuchiha!%40@clustergarage.evrvxdj.mongodb.net/?retryWrites=true&w=majority"
+  },
+  "jwt": {
+    "accessTokenExpiresIn": 15,
+    "logLevel": "info",
+    "secret": "Here we go again"
   }
 }

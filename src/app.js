@@ -1,10 +1,27 @@
 import express from "express";
-
+import config from "config";
 import bodyParser from "body-parser";
 import cors from "cors";
 import { CustomerRoute } from "./routes/customer.routes.js";
-const app = express();
+import mongoose from "mongoose";
+// import { MongoClient } from "mongodb";
 
+// const mongodb = require("mongodb");
+const app = express();
+/**
+ * * _________database
+ */
+mongoose.set("strictQuery", false);
+mongoose.connect(config.get("database.uri"));
+
+// Get the default connection
+const db = mongoose.connection;
+// Bind connection to error event (to get notification of connection errors)
+db.on("error", console.error.bind(console, "MongoDB connection error:"));
+console.log("database connected successfully");
+/**
+ * * _________app configuration
+ */
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
@@ -26,10 +43,9 @@ app.use(cors());
 //     secret: "SECRET",
 //   })
 // );
-
-// app.use("/api/statistics", StatisticRoute);
+/**
+ * * _________routes
+ */
 app.use("/api/customers", CustomerRoute);
-//
-// app.use("/api/seeds", SeedRoute);
 
-export { app };
+export { app, db };
