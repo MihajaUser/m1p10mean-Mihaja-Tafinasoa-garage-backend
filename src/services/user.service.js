@@ -1,9 +1,14 @@
-import { genSalt, hash } from "bcryptjs";
-import { insertUserMdl } from "../models/user.model";
+import { insertUserMdl } from "../models/user.model.js";
+import pkg from "bcryptjs";
+const { genSalt, hash } = pkg;
 
-export const insertUserSvs = async (user) => {
-  const salt = await genSalt(10);
-  const hashed = await hash(user.password, salt);
-  user.password = hashed;
-  user = insertUserMdl(user);
+export const insertUserSvc = async (user) => {
+  try {
+    const salt = await genSalt(10);
+    const hashed = await hash(user.password, salt);
+    user.password = hashed;
+    user = insertUserMdl(user);
+  } catch (error) {
+    console.log(error);
+  }
 };

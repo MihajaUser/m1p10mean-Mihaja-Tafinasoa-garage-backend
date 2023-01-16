@@ -2,8 +2,9 @@ import express from "express";
 import config from "config";
 import bodyParser from "body-parser";
 import cors from "cors";
-import { CustomerRoute } from "./routes/customer.routes.js";
+// import { CustomerRoute } from "./routes/customer.routes.js";
 import mongoose from "mongoose";
+import { UserRoute } from "./routes/user.routes.js";
 // import { MongoClient } from "mongodb";
 
 // const mongodb = require("mongodb");
@@ -46,6 +47,6 @@ app.use(cors());
 /**
  * * _________routes
  */
-app.use("/api/customers", CustomerRoute);
+app.use("/api/users", UserRoute);
 
 export { app, db };
