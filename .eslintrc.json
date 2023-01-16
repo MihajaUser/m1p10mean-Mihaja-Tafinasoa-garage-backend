@@ -10,7 +10,7 @@
     "sourceType": "module"
   },
   "rules": {
-    "semi": [2, "always"],
-    "quotes": [2, "double", { "avoidEscape": true }]
+    "quotes": [2, "double"],
+    "semi": [1, "always"]
   }
 }

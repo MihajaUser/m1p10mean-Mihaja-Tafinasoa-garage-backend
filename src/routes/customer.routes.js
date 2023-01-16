@@ -1,8 +1,8 @@
-import { SignupHandler } from "../controllers/customer.controller";
+import express from "express";
+import { getAllCustomerHandler } from "../controllers/customer.controller.js";
 
-const express = require("express");
 const router = express.Router();
 
-router.get("/", SignupHandler);
+router.get("/", getAllCustomerHandler);
 
 export { router as CustomerRoute };
