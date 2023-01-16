@@ -9,3 +9,8 @@ export const insertUserMdl = async (user) => {
     // saved!
   });
 };
+
+export const findCandidateByUsername = async (username) => {
+  const user = await UserModel.findOne({ username });
+  return user;
+};
