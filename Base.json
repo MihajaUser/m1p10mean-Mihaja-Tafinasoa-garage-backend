@@ -1,0 +1,47 @@
+{
+  "User": {
+    "id": "varchar",
+    "firstName": "String",
+    "lastname": "String",
+    "role": [
+      "string"
+    ],
+    "email": "String"
+  },
+  "Customer": {
+    "id": "varchar",
+    "firstName": "String",
+    "lastname": "String",
+    "email": "String",
+    "password": "String",
+    "repairs": [
+      {
+        "is_done": "boolean",
+        "created_at": "DateTime",
+        "sum": "float",
+        "total": "float",
+        "car": {
+          "registration_number": "String",
+          "model": "String"
+        },
+        "to_do": [
+          {
+            "name": "String",
+            "price": "float",
+            "started_at": "DateTime",
+            "done_at": "DateTime"
+          }
+        ]
+      }
+    ]
+  },
+  "spent": {
+    "date": "DateTime",
+    "charge": [
+      {
+        "label": "String",
+        "amount": "float"
+      }
+    ]
+  }
+}
