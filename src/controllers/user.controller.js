@@ -23,3 +23,7 @@ export const loginUserCtrl = async (req, res, next) => {
       .send({ status: "FAILED", data: { error: error?.message || error } });
   }
 };
+
+export const tokenTest = async (req, res, next) => {
+  return res.status(200).json({ message: "access allowed" });
+};
