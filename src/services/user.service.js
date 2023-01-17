@@ -31,7 +31,8 @@ export const loginUserSvc = async (useOnLog) => {
     throw error;
   }
   /* Password */
-  if (!compare(useOnLog.password, user.password)) {
+  console.log(useOnLog.password, " ", user.password);
+  if (!(await compare(useOnLog.password, user.password))) {
     const error = new Error("Invalid Password");
     error.status = 401;
     throw error;
