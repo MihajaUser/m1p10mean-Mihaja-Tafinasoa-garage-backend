@@ -18,6 +18,7 @@ export const loginUserCtrl = async (req, res, next) => {
       .status(200)
       .json({ message: "User logged in successfully", data });
   } catch (error) {
+    console.log(error.status);
     return res
       .status(error?.status || 500)
       .send({ status: "FAILED", data: { error: error?.message || error } });

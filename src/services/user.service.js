@@ -26,11 +26,15 @@ export const loginUserSvc = async (useOnLog) => {
   const user = await findCandidateByUsername(useOnLog.username);
   /* Username */
   if (!user) {
-    throw new Error("Username not found");
+    const error = new Error("Username not found");
+    error.status = 401;
+    throw error;
   }
   /* Password */
-  if (!(await compare(useOnLog.password, user.password))) {
-    throw new Error("Incorrect password");
+  if (!compare(useOnLog.password, user.password)) {
+    const error = new Error("Invalid Password");
+    error.status = 401;
+    throw error;
   }
   /* Role  */
   let access = false;
@@ -39,7 +43,9 @@ export const loginUserSvc = async (useOnLog) => {
   });
 
   if (!access) {
-    throw new Error("Access denied");
+    const error = new Error("Invalid Role");
+    error.status = 401;
+    throw error;
   }
   /*  */
   const token = jwt.sign(
