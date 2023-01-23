@@ -8,6 +8,22 @@ const CustomerSchema = new Schema({
     password: String,
     roles: [String],
   },
+  repairs: [
+    {
+      is_done: Boolean,
+      total_amount: Number,
+      car: {
+        registration_number: String,
+        model: String,
+      },
+      to_to: {
+        name: String,
+        price: Number,
+        started_at: Date,
+        done_at: Date,
+      },
+    },
+  ],
 });
 
 const CustomerModel = model("Customers", CustomerSchema);
