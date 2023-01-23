@@ -9,7 +9,7 @@ export const insertCustomerMdl = async (customer) => {
   });
 };
 
-// export const findCandidateByUsername = async (username) => {
-//   const user = await CustomerModel.findOne({ username });
-//   return user;
-// };
+export const findCustomerByEmailMdl = async (email) => {
+  const user = await CustomerModel.findOne({ email });
+  return user;
+};

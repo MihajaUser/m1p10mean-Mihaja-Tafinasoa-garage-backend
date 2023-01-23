@@ -10,7 +10,7 @@ export const insertUserMdl = async (user) => {
   });
 };
 
-export const findCandidateByUsername = async (username) => {
+export const findUserByUsername = async (username) => {
   const user = await UserModel.findOne({ username });
   return user;
 };

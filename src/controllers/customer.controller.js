@@ -1,4 +1,7 @@
-import { insertCustomerSvc } from "../services/customer.service.js";
+import {
+  insertCustomerSvc,
+  loginCustomerSvc,
+} from "../services/customer.service.js";
 
 export const getAllCustomerHandler = (req, res) => {
   return res.status(200).json({ message: "bonjour" });
@@ -14,4 +17,16 @@ export const signUpCustomerHandler = async (req, res) => {
       .send({ status: "FAILED", data: { error: error?.message || error } });
   }
 };
-export const signInCustomerHandler = (req, res) => {};
+export const signInCustomerHandler = async (req, res) => {
+  try {
+    const data = await loginCustomerSvc(req.body);
+    return res
+      .status(200)
+      .json({ message: "User logged in successfully", data });
+  } catch (error) {
+    console.log(error.status);
+    return res
+      .status(error?.status || 500)
+      .send({ status: "FAILED", data: { error: error?.message || error } });
+  }
+};

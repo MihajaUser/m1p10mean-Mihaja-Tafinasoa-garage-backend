@@ -1,10 +1,7 @@
 import bcrypt from "bcryptjs";
 import config from "config";
 import jwt from "jsonwebtoken";
-import {
-  findCandidateByUsername,
-  insertUserMdl,
-} from "../models/user.model.js";
+import { findUserByUsername, insertUserMdl } from "../models/user.model.js";
 import { confirmRegistrationMailSvc } from "./mail.service.js";
 
 const { genSalt, hash, compare } = bcrypt;
@@ -23,7 +20,7 @@ export const insertUserSvc = async (user) => {
 };
 
 export const loginUserSvc = async (useOnLog) => {
-  const user = await findCandidateByUsername(useOnLog.username);
+  const user = await findUserByUsername(useOnLog.username);
   /* Username */
   if (!user) {
     const error = new Error("Username not found");
