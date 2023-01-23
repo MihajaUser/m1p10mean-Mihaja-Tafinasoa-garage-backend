@@ -41,9 +41,9 @@ export const insertCarDepotHandler = async (req, res) => {
     console.log(error.status);
   }
 };
-export const carrepairsHandler = async (req, res) => {
+export const getCarRepairsHandler = async (req, res) => {
   try {
-    const myData = await carrepairsSvc(req.params.id);
+    const myData = await getCarRepairsSvc(req.params.id);
     return res.status(200).json(myData);
   } catch (error) {}
 };

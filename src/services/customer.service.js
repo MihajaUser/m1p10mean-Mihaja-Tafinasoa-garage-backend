@@ -8,7 +8,6 @@ import {
   findCustomerByEmailMdl,
   findCustomerById,
   replaceCustomerRepairs,
-  carrepairs,
 } from "../models/customer.model.js";
 
 const { genSalt, hash, compare } = bcrypt;
@@ -20,14 +19,6 @@ export const insertCustomerSvc = async (customer) => {
     customer.repairs = [];
     await insertCustomerMdl(customer);
     confirmRegistrationMailSvc(customer);
-  } catch (error) {
-    console.log(error);
-  }
-};
-export const carrepairsSvc = async (id) => {
-  try {
-    const repairs = await carrepairs(id);
-    return repairs;
   } catch (error) {
     console.log(error);
   }
@@ -72,7 +63,18 @@ export const loginCustomerSvc = async (useOnLog) => {
   };
 };
 
+/*
+ *depot car
+ */
 export const insertCarDepotSvc = async (depot) => {
   const user = await findCustomerById(depot._id);
   await replaceCustomerRepairs(user, depot);
+};
+export const insertCarRepairsSvc = async (id) => {
+  try {
+    const repairs = await insertCarRepairMdl(id);
+    return repairs;
+  } catch (error) {
+    console.log(error);
+  }
 };
