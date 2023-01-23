@@ -7,11 +7,11 @@ import {
   insertCustomerMdl,
   findCustomerByEmailMdl,
   findCustomerById,
-  replaceCustomerRepairs
+  replaceCustomerRepairs,
+  carrepairs
 } from "../models/customer.model.js";
 
 const { genSalt, hash, compare } = bcrypt;
-
 export const insertCustomerSvc = async (customer) => {
   try {
     const salt = await genSalt(10);
@@ -24,6 +24,14 @@ export const insertCustomerSvc = async (customer) => {
     console.log(error);
   }
 };
+export const carrepairsSvc = async (id) => {
+  try {
+    const repairs = await carrepairs(id);
+    return repairs
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 export const insertCarDepotSvc = async (depot) => {
   const user = await findCustomerById(depot._id);
