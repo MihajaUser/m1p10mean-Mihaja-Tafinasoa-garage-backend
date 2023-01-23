@@ -19,6 +19,6 @@ export const findCustomerById = async (_id) => {
   return user;
 };
 export const replaceCustomerRepairs = async (customer, depot) => {
-  customer.repairs.push(depot.repairs)
+  customer.repairs.push(depot.repairs);
   await customer.save();
-}
+};

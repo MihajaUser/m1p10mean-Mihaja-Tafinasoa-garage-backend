@@ -31,12 +31,12 @@ export const signInCustomerHandler = async (req, res) => {
       .send({ status: "FAILED", data: { error: error?.message || error } });
   }
 };
+
 export const insertCarDepot = async (req, res) => {
   try {
-    console.log("insert carDepot")
-    const myData = await insertCarDepotSvc(req.body)
-    return res.status(200).json({ data: "insert carDepot", myData })
+    const myData = await insertCarDepotSvc(req.body);
+    return res.status(200).json({ data: "insert carDepot", myData });
   } catch (error) {
     console.log(error.status);
   }
-}
+};
