@@ -12,7 +12,7 @@ export const insertCustomerSvc = async (customer) => {
     const salt = await genSalt(10);
     const hashed = await hash(customer.credentials.password, salt);
     customer.credentials.password = hashed;
-    // await insertCustomerMdl(customer);
+    await insertCustomerMdl(customer);
     confirmRegistrationMailSvc(customer);
   } catch (error) {
     console.log(error);
