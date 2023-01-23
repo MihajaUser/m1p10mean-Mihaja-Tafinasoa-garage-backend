@@ -1,0 +1,3 @@
+fo : responsable financer
+rw : responsable atelier
+ctmr : customer
