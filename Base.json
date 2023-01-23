@@ -10,9 +10,10 @@
     "id": "varchar",
     "firstName": "String",
     "lastname": "String",
-
-    "email": "String",
-    "password": "String",
+    "credential": {
+      "email": "String",
+      "password": "String"
+    },
     "repairs": [
       {
         "is_done": "boolean",
