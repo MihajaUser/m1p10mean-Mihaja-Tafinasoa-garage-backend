@@ -13,3 +13,12 @@ export const findCustomerByEmailMdl = async (email) => {
   const user = await CustomerModel.findOne({ email });
   return user;
 };
+
+export const findCustomerById = async (_id) => {
+  const user = await CustomerModel.findOne({ _id });
+  return user;
+};
+export const replaceCustomerRepairs = async (customer, depot) => {
+  customer.repairs.push(depot.repairs)
+  await customer.save();
+}
