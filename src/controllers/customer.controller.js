@@ -1,8 +1,8 @@
 import {
   insertCustomerSvc,
   loginCustomerSvc,
-  insertCarDepotSvc,
-  getRepairsSvc,
+  pushCarDepotSvc,
+  getCarDepotSvc,
 } from "../services/customer.service.js";
 
 export const getAllCustomerHandler = (req, res) => {
@@ -33,17 +33,20 @@ export const signInCustomerHandler = async (req, res) => {
   }
 };
 
-export const insertCarDepotHandler = async (req, res) => {
+/*
+ *
+ */
+export const pushCarDepotHandler = async (req, res) => {
   try {
-    const myData = await insertCarDepotSvc(req.body);
+    const myData = await pushCarDepotSvc(req.body);
     return res.status(200).json({ data: "insert carDepot", myData });
   } catch (error) {
     console.log(error.status);
   }
 };
-export const getCarRepairsHandler = async (req, res) => {
+export const getCarDepotHandler = async (req, res) => {
   try {
-    const myData = await getRepairsSvc(req.params.id);
+    const myData = await getCarDepotSvc(req.params.id);
     return res.status(200).json(myData);
   } catch (error) {}
 };

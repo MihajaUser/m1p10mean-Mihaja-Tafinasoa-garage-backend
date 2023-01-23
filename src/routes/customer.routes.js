@@ -2,15 +2,18 @@ import express from "express";
 import {
   signUpCustomerHandler,
   signInCustomerHandler,
-  insertCarDepotHandler,
-  carrepairsHandler
+  pushCarDepotHandler,
+  getCarDepotHandler,
 } from "../controllers/customer.controller.js";
 
 const router = express.Router();
 
 router.post("/", signUpCustomerHandler);
 router.post("/login", signInCustomerHandler);
-router.post("/cardepot", insertCarDepotHandler)
-router.get("/carrepairs/:id", carrepairsHandler)
+/*
+ *
+ */
+router.post("/car-depot", pushCarDepotHandler);
+router.get("/car-deport/:id", getCarDepotHandler);
 
 export { router as CustomerRoute };
