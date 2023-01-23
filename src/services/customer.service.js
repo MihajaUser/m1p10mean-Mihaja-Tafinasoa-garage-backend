@@ -6,9 +6,9 @@ import { confirmRegistrationMailSvc } from "./mail.service.js";
 import {
   insertCustomerMdl,
   findCustomerByEmailMdl,
-  pushDepotMdl,
   getCarDepotMdl,
   findCustomerByIdMdl,
+  pushCarDepotMdl,
 } from "../models/customer.model.js";
 
 const { genSalt, hash, compare } = bcrypt;
@@ -69,7 +69,7 @@ export const loginCustomerSvc = async (useOnLog) => {
  */
 export const pushCarDepotSvc = async (depot) => {
   const user = await findCustomerByIdMdl(depot._id);
-  await pushDepotMdl(user, depot);
+  await pushCarDepotMdl(user, depot);
 };
 
 export const getCarDepotSvc = async (id) => {
