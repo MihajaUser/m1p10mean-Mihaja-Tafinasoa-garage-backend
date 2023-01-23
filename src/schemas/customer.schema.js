@@ -11,6 +11,7 @@ const CustomerSchema = new Schema({
   repairs: [
     {
       is_done: Boolean,
+      is_confirmed: Boolean,
       total_amount: Number,
       car: {
         registration_number: String,
