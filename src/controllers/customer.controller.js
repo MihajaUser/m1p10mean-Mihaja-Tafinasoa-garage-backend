@@ -2,7 +2,7 @@ import {
   insertCustomerSvc,
   loginCustomerSvc,
   insertCarDepotSvc,
-  carrepairsSvc,
+  getRepairsSvc,
 } from "../services/customer.service.js";
 
 export const getAllCustomerHandler = (req, res) => {
@@ -43,7 +43,7 @@ export const insertCarDepotHandler = async (req, res) => {
 };
 export const getCarRepairsHandler = async (req, res) => {
   try {
-    const myData = await getCarRepairsSvc(req.params.id);
+    const myData = await getRepairsSvc(req.params.id);
     return res.status(200).json(myData);
   } catch (error) {}
 };
