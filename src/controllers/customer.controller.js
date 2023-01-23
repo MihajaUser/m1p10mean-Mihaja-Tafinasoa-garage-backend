@@ -2,6 +2,7 @@ import {
   insertCustomerSvc,
   loginCustomerSvc,
   insertCarDepotSvc,
+  carrepairsSvc,
 } from "../services/customer.service.js";
 
 export const getAllCustomerHandler = (req, res) => {
@@ -32,11 +33,17 @@ export const signInCustomerHandler = async (req, res) => {
   }
 };
 
-export const insertCarDepot = async (req, res) => {
+export const insertCarDepotHandler = async (req, res) => {
   try {
     const myData = await insertCarDepotSvc(req.body);
     return res.status(200).json({ data: "insert carDepot", myData });
   } catch (error) {
     console.log(error.status);
   }
+};
+export const carrepairsHandler = async (req, res) => {
+  try {
+    const myData = await carrepairsSvc(req.params.id);
+    return res.status(200).json(myData);
+  } catch (error) {}
 };

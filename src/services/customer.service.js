@@ -8,10 +8,10 @@ import {
   findCustomerByEmailMdl,
   findCustomerById,
   replaceCustomerRepairs,
+  carrepairs,
 } from "../models/customer.model.js";
 
 const { genSalt, hash, compare } = bcrypt;
-
 export const insertCustomerSvc = async (customer) => {
   try {
     const salt = await genSalt(10);
@@ -20,6 +20,14 @@ export const insertCustomerSvc = async (customer) => {
     customer.repairs = [];
     await insertCustomerMdl(customer);
     confirmRegistrationMailSvc(customer);
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const carrepairsSvc = async (id) => {
+  try {
+    const repairs = await carrepairs(id);
+    return repairs;
   } catch (error) {
     console.log(error);
   }
