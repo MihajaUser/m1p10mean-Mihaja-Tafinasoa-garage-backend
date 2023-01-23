@@ -9,5 +9,5 @@ const UserSchema = new Schema({
   roles: [String],
 });
 
-const UserModel = model("UserModel", UserSchema);
+const UserModel = model("users", UserSchema);
 export { UserModel };

@@ -5,6 +5,7 @@ import cors from "cors";
 // import { CustomerRoute } from "./routes/customer.routes.js";
 import mongoose from "mongoose";
 import { UserRoute } from "./routes/user.routes.js";
+import { CustomerRoute } from "./routes/customer.routes.js";
 // import { MongoClient } from "mongodb";
 
 // const mongodb = require("mongodb");
@@ -48,5 +49,6 @@ app.use(cors());
  * * _________routes
  */
 app.use("/api/users", UserRoute);
+app.use("/api/customers", CustomerRoute);
 
 export { app, db };

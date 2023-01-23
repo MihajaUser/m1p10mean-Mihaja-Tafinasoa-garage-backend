@@ -1,12 +1,15 @@
 import hbs from "nodemailer-express-handlebars";
 import nodemailer from "nodemailer";
+
+// _Q2878cyp
 const transporter = nodemailer.createTransport({
   host: "cscsmadagascar.mg",
   port: 587,
   secure: false,
   auth: {
-    user: "notif@cscsmadagascar.mg",
-    pass: "Qnh69t?8",
+    user: "custom@cscsmadagascar.mg",
+    pass: "_Q2878cyp",
+    // pass: "Qnh69t?8",
   },
   tls: {
     rejectUnauthorized: false,
@@ -14,7 +17,7 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-let options = {
+const options = {
   viewEngine: {
     extname: ".hbs", // handlebars extension
     layoutsDir: "src/views/mail/", // location of handlebars templates
@@ -29,11 +32,11 @@ const from = "Garagenaka <notif@cscsmadagascar.mg>";
 
 transporter.use("compile", hbs(options));
 
-export const confirmRegistrationMailSvc = (user) => {
-  console.log(user.email);
+export const confirmRegistrationMailSvc = (customer) => {
+  // console.log(customer);
   const mailOptions = {
     from,
-    to: user.email,
+    to: customer.email,
     subject: "Confirmation de candidature",
     template: "signup-confirmation",
     context: {

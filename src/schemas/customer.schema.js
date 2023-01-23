@@ -1,6 +1,14 @@
 import { Schema, model } from "mongoose";
 
-const UserSchema = new Schema({});
+const CustomerSchema = new Schema({
+  firstname: String,
+  lastname: String,
+  email: String,
+  credentials: {
+    password: String,
+    roles: [String],
+  },
+});
 
-const UserModel = model("UserModel", UserSchema);
-export { UserModel };
+const CustomerModel = model("Customers", CustomerSchema);
+export { CustomerModel };

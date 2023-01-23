@@ -1,8 +1,8 @@
 import express from "express";
-import { getAllCustomerHandler } from "../controllers/customer.controller.js";
+import { signUpCustomerHandler } from "../controllers/customer.controller.js";
 
 const router = express.Router();
 
-router.post("/", getAllCustomerHandler);
+router.post("/", signUpCustomerHandler);
 
 export { router as CustomerRoute };

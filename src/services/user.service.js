@@ -1,4 +1,4 @@
-import pkg from "bcryptjs";
+import bcrypt from "bcryptjs";
 import config from "config";
 import jwt from "jsonwebtoken";
 import {
@@ -7,7 +7,7 @@ import {
 } from "../models/user.model.js";
 import { confirmRegistrationMailSvc } from "./mail.service.js";
 
-const { genSalt, hash, compare } = pkg;
+const { genSalt, hash, compare } = bcrypt;
 
 export const insertUserSvc = async (user) => {
   try {
