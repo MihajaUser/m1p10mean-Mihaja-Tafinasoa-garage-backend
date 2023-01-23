@@ -3,7 +3,9 @@
     "id": "varchar",
     "firstName": "String",
     "lastname": "String",
-    "role": ["string"],
+    "role": [
+      "string"
+    ],
     "email": "String"
   },
   "Customer": {
