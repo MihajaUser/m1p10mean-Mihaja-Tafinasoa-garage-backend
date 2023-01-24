@@ -18,7 +18,7 @@ const CustomerSchema = new Schema({
         model: String,
       },
       to_to: {
-        name: String,
+        label: String,
         price: Number,
         started_at: Date,
         done_at: Date,
