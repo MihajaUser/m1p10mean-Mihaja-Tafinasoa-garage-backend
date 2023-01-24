@@ -38,15 +38,18 @@ export const signInCustomerHandler = async (req, res) => {
  */
 export const pushCarDepotHandler = async (req, res) => {
   try {
-    const myData = await pushCarDepotSvc(req.body);
-    return res.status(200).json({ data: "insert carDepot", myData });
+    const data = await pushCarDepotSvc(req.body);
+    console.log("Bonjour");
+    return res.status(200).json({ message: "insert carDepot", data });
   } catch (error) {
-    console.log(error.status);
+    return res
+      .status(error?.status || 500)
+      .send({ status: "FAILED", data: { error: error?.message || error } });
   }
 };
 export const getCarDepotHandler = async (req, res) => {
   try {
     const myData = await getCarDepotSvc(req.params.id);
     return res.status(200).json(myData);
-  } catch (error) { }
+  } catch (error) {}
 };
