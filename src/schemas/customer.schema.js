@@ -17,12 +17,12 @@ const CustomerSchema = new Schema({
         registration_number: String,
         model: String,
       },
-      to_to: {
+      to_do: [{
         label: String,
         price: Number,
         started_at: Date,
         done_at: Date,
-      },
+      }],
     },
   ],
 });
