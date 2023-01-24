@@ -29,7 +29,7 @@ export const getCarDepotMdl = async (id) => {
   const user = CustomerModel.find({ _id: id }).select({ repairs: 1, _id: 1 });
   return user;
 };
-export const getCarConfirmationMdl = async (idUser, confirmation) => {
-  const repairs = CustomerModel.find({ _id: idUser, is_confirmed: confirmation }).select({ repairs: 1, _id: 1 });
-  return repairs
-}
+// export const getCarConfirmationMdl = async (idUser, confirmation) => {
+//   const repairs = CustomerModel.find({ _id: idUser, is_confirmed: confirmation }).select({ repairs: 1, _id: 1 });
+//   return repairs
+// }

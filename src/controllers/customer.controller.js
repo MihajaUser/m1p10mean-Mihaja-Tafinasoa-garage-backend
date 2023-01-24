@@ -3,7 +3,6 @@ import {
   loginCustomerSvc,
   pushCarDepotSvc,
   getCarDepotSvc,
-  getCarConfirmationSvc
 
 } from "../services/customer.service.js";
 
@@ -54,7 +53,8 @@ export const getCarDepotHandler = async (req, res) => {
 };
 export const getCarConfirmationHandler = async (req, res) => {
   try {
-    const myData = await getCarConfirmationSvc(req.params.id, req.params.confirmation);
+    // const myData = await getCarConfirmationSvc(req.params.id, req.params.confirmation);
+    const myData = { id: req.params.id, confirmation: req.params.confirmation }
     return res.status(200).json(myData);
   } catch (error) { console.log(error.status); }
 };
