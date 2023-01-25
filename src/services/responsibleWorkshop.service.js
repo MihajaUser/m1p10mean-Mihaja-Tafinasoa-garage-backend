@@ -8,12 +8,3 @@ export const insertTodoSvc = async (todo) => {
     console.log(error);
   }
 };
-
-// export const getCarDepotSvc = async (id) => {
-//   try {
-//     const repairs = await getCarDepotMdl(id);
-//     return repairs;
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
