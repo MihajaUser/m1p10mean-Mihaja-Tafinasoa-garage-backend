@@ -1,6 +1,4 @@
-import {
-  insertTodoSvc,
-} from "../services/responsibleWorkshop.service.js";
+import { insertTodoSvc } from "../services/workshopManager.service.js";
 
 export const insertToDoCtrl = async (req, res) => {
   try {
@@ -9,6 +7,4 @@ export const insertToDoCtrl = async (req, res) => {
   } catch (error) {
     console.log(error.status);
   }
-
 };
-

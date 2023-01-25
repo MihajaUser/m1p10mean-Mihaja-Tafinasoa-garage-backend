@@ -6,7 +6,8 @@ import cors from "cors";
 import mongoose from "mongoose";
 import { UserRoute } from "./routes/user.routes.js";
 import { CustomerRoute } from "./routes/customer.routes.js";
-import { ResponsibleWorkshopRoute } from "./routes/responsibleWorkshop.routes.js"
+import { WorkshopManagerRoute } from "./routes/responsibleWorkshop.routes.js";
+
 // import { MongoClient } from "mongodb";
 
 // const mongodb = require("mongodb");
@@ -51,6 +52,5 @@ app.use(cors());
  */
 app.use("/api/users", UserRoute);
 app.use("/api/customers", CustomerRoute);
-app.use("/api/responsibleWorkshops", ResponsibleWorkshopRoute)
-
+app.use("/api/responsibleWorkshops", WorkshopManagerRoute);
 export { app, db };
