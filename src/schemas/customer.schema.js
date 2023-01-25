@@ -15,6 +15,7 @@ const CustomerSchema = new Schema({
       total_amount: Number,
       car: {
         registration_number: String,
+        brand: String,
         model: String,
       },
       to_do: [{
@@ -23,6 +24,7 @@ const CustomerSchema = new Schema({
         started_at: Date,
         done_at: Date,
       }],
+
     },
   ],
 });

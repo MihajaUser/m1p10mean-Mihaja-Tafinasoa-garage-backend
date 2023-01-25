@@ -69,7 +69,7 @@ export const loginCustomerSvc = async (useOnLog) => {
  */
 export const pushCarDepotSvc = async (depot) => {
   const user = await findCustomerByIdMdl(depot._id);
-  await pushCarDepotMdl(user, depot);
+  return await pushCarDepotMdl(user, depot);
 };
 
 export const getCarDepotSvc = async (id) => {

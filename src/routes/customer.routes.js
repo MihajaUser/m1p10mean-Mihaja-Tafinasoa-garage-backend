@@ -13,7 +13,7 @@ router.post("/login", signInCustomerHandler);
 /*
  *
  */
-router.post("/car-depot", pushCarDepotHandler);
+router.post("/car-depot/:id", pushCarDepotHandler);
 router.get("/car-deport/:id", getCarDepotHandler);
 
 export { router as CustomerRoute };

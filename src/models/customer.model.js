@@ -22,8 +22,12 @@ export const findCustomerByIdMdl = async (_id) => {
   return user;
 };
 export const pushCarDepotMdl = async (customer, depot) => {
-  customer.repairs.push(depot.repairs);
-  await customer.save();
+  try {
+    customer.repairs.push(depot.repairs);
+    return await customer.save();
+  } catch (error) {
+    console.log(error);
+  }
 };
 export const getCarDepotMdl = async (id) => {
   const user = CustomerModel.find({ _id: id }).select({ repairs: 1, _id: 1 });
