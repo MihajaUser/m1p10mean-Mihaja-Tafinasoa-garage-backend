@@ -2,7 +2,7 @@ import {
   insertCustomerSvc,
   loginCustomerSvc,
   pushCarDepotSvc,
-  getCarDepotSvc,
+  getCarDepotSvc
 } from "../services/customer.service.js";
 
 export const getAllCustomerHandler = (req, res) => {

@@ -6,7 +6,7 @@ import cors from "cors";
 import mongoose from "mongoose";
 import { UserRoute } from "./routes/user.routes.js";
 import { CustomerRoute } from "./routes/customer.routes.js";
-import { WorkshopManagerRoute } from "./routes/responsibleWorkshop.routes.js";
+import { WorkshopManagerRoute } from "./routes/workshop-manager.routes.js";
 
 // import { MongoClient } from "mongodb";
 
@@ -52,5 +52,5 @@ app.use(cors());
  */
 app.use("/api/users", UserRoute);
 app.use("/api/customers", CustomerRoute);
-app.use("/api/responsibleWorkshops", WorkshopManagerRoute);
+app.use("/api/workshop-managers", WorkshopManagerRoute);
 export { app, db };

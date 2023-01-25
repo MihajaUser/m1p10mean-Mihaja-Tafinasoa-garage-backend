@@ -1,5 +1,6 @@
 {
-  "cSpell.words": ["firstname", "lastname", "middlewares"]
+  "cSpell.words": ["firstname", "lastname", "middlewares"],
+  "prettier.trailingComma": "none"
   // "workbench.colorCustomizations": {
   //   "activityBar.activeBackground": "#fa1b49",
   //   "activityBar.background": "#fa1b49",

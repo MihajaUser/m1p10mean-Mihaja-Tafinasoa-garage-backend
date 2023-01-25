@@ -6,7 +6,7 @@ const CustomerSchema = new Schema({
   email: String,
   credentials: {
     password: String,
-    roles: [String],
+    roles: [String]
   },
   repairs: [
     {
@@ -16,17 +16,18 @@ const CustomerSchema = new Schema({
       car: {
         registration_number: String,
         brand: String,
-        model: String,
+        model: String
       },
-      to_do: [{
-        label: String,
-        price: Number,
-        started_at: Date,
-        done_at: Date,
-      }],
-
-    },
-  ],
+      to_do: [
+        {
+          label: String,
+          price: Number,
+          started_at: Date,
+          done_at: Date
+        }
+      ]
+    }
+  ]
 });
 
 const CustomerModel = model("Customers", CustomerSchema);

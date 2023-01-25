@@ -1,4 +1,4 @@
-import { insertTodoSvc } from "../services/workshopManager.service.js";
+import { insertTodoSvc } from "../services/workshop-manager.service.js";
 
 export const insertToDoCtrl = async (req, res) => {
   try {
