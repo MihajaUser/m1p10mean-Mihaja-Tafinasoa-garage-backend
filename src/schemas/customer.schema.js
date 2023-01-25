@@ -18,14 +18,13 @@ const CustomerSchema = new Schema({
         brand: String,
         model: String,
       },
-      to_do: [
-        {
-          name: String,
-          price: Number,
-          started_at: Date,
-          done_at: Date,
-        },
-      ],
+      to_do: [{
+        label: String,
+        price: Number,
+        started_at: Date,
+        done_at: Date,
+      }],
+
     },
   ],
 });

@@ -51,5 +51,9 @@ export const getCarDepotHandler = async (req, res) => {
   try {
     const myData = await getCarDepotSvc(req.params.id);
     return res.status(200).json(myData);
+<<<<<<< to-do-backend
+  } catch (error) { console.log(error.status); }
+=======
   } catch (error) {}
+>>>>>>> main
 };
