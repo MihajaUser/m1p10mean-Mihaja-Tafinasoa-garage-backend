@@ -1,10 +1,38 @@
 {
-  "customerId": "63d032fbd8c3b92dc5653fdc",
-  "repairId": "63d03c05c05f4a2e1679f6b9",
-  "toDo": {
-    "label": "Motor",
-    "price": 100000,
-    "started_at": "2022-04-25",
-    "done_at": "2022-05-26"
-  }
+  "data": [
+    {
+      "description": "insert repairs ",
+      "url": "POST  .../repairs/:customer_id",
+      "data sample": {
+        "_id": "63d032fbd8c3b92dc5653fdc",
+        "repairs": {
+          "is_confirmed": false,
+          "total_amount": 16,
+          "car": {
+            "registration_number": "Rally",
+            "model": "Rally"
+          },
+          "to_do": []
+        }
+      }
+    },
+    {
+      "description": "insert to do",
+      "url": "POST  .../repairs/to-do",
+      "data sample": {
+        "customerId": "63d032fbd8c3b92dc5653fdc",
+        "repairId": "63d1b0d10a172eb1f5b0b7a2",
+        "toDo": {
+          "label": "Motor",
+          "price": 100000,
+          "started_at": "2022-04-25",
+          "done_at": "2022-05-26"
+        }
+      }
+    },
+    {
+      "description": "get unconfirmed repairs",
+      "url": "GET .../repairs/unconfirmed"
+    }
+  ]
 }

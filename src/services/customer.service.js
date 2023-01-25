@@ -5,10 +5,7 @@ import jwt from "jsonwebtoken";
 import { confirmRegistrationMailSvc } from "./mail.service.js";
 import {
   insertCustomerMdl,
-  findCustomerByEmailMdl,
-  getCarDepotMdl,
-  findCustomerByIdMdl,
-  pushCarDepotMdl,
+  findCustomerByEmailMdl
 } from "../models/customer.model.js";
 
 const { genSalt, hash, compare } = bcrypt;
@@ -60,23 +57,6 @@ export const loginCustomerSvc = async (useOnLog) => {
   return {
     token,
     user,
-    loggedAs: useOnLog.logAs,
+    loggedAs: useOnLog.logAs
   };
-};
-
-/*
- *depot car
- */
-export const pushCarDepotSvc = async (depot) => {
-  const user = await findCustomerByIdMdl(depot._id);
-  return await pushCarDepotMdl(user, depot);
-};
-
-export const getCarDepotSvc = async (id) => {
-  try {
-    const repairs = await getCarDepotMdl(id);
-    return repairs;
-  } catch (error) {
-    console.log(error);
-  }
 };

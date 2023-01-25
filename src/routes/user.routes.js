@@ -3,7 +3,7 @@ import { checkJwt, checkRole } from "./../middlewares/jwt.js";
 import {
   insertUserCtrl,
   loginUserCtrl,
-  tokenTest,
+  tokenTest
 } from "../controllers/user.controller.js";
 const router = express.Router();
 
