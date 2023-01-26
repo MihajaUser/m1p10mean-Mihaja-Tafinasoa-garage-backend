@@ -23,10 +23,15 @@ const CustomerSchema = new Schema(
             },
             to_do: [
               {
-                label: String,
-                price: Number,
-                started_at: Date,
-                done_at: Date
+                type: new Schema(
+                  {
+                    label: String,
+                    price: Number,
+                    started_at: Date,
+                    done_at: Date
+                  },
+                  { _id: false }
+                )
               }
             ]
           },
