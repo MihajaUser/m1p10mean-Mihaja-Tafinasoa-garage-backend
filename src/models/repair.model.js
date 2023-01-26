@@ -5,6 +5,7 @@ import { CustomerModel } from "../schemas/customer.schema.js";
  */
 export const insertRepairMdl = async (customer, depot) => {
   try {
+    console.log(customer);
     customer.repairs.push(depot.repairs);
     return await customer.save();
   } catch (error) {

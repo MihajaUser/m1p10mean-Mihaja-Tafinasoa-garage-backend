@@ -31,7 +31,6 @@ export const getRepairByCustomerCtrl = async (req, res) => {
 
 export const getUnconfirmedRepairsSvc = async (req, res) => {
   try {
-    console.log("Bonjour");
     const data = await getUnconfirmedRepairSvc();
     return res.status(200).json(data);
   } catch (error) {
@@ -48,6 +47,7 @@ export const getUnconfirmedRepairsSvc = async (req, res) => {
  */
 export const confirmRepairCtrl = async (req, res) => {
   try {
+    console.log("Bonjour");
     const data = await confirmRepairSvc(req.body);
     return res.status(200).json(data);
   } catch (error) {

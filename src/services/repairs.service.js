@@ -1,5 +1,6 @@
 import { findCustomerByIdMdl } from "../models/customer.model.js";
 import {
+  confirmRepairMdl,
   getRepairByCustomerMdl,
   getUnconfirmedRepairMdl,
   insertRepairMdl
@@ -29,7 +30,7 @@ export const getUnconfirmedRepairSvc = async () => {
 //
 export const confirmRepairSvc = async (data) => {
   try {
-    return await insertRepairMdl(data);
+    return await confirmRepairMdl(data);
   } catch (error) {
     console.log(error);
   }
