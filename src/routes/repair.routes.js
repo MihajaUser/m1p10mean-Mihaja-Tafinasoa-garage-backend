@@ -7,10 +7,10 @@ import {
 } from "../controllers/repair.controller.js";
 const router = express.Router();
 // repairs
-// router.post("/:id", insertRepairsCtrl);
-// router.get("/:id", getRepairByCustomerCtrl);
+router.post("/:id", insertRepairsCtrl);
+router.get("/:id", getRepairByCustomerCtrl);
 router.get("/unconfirmed", getUnconfirmedRepairsSvc);
-// to oos
+// to do
 router.post("/confirm/:id", confirmRepairCtrl);
 
 export { router as RepairRoute };

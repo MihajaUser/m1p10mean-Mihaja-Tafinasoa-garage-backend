@@ -11,7 +11,6 @@ import {
 export const insertRepairsCtrl = async (req, res) => {
   try {
     const data = await insertRepairSvc(req.body);
-
     return res.status(200).json({ message: "insert carDepot", data });
   } catch (error) {
     return res
