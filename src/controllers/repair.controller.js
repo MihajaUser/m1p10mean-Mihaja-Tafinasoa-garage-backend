@@ -1,16 +1,16 @@
 import {
-  getCarDepotSvc,
-  getUnconfirmedCarDepotSvc,
-  insertTodoSvc,
-  pushCarDepotSvc
+  confirmRepairSvc,
+  getRepairsByCustomerSvc,
+  getUnconfirmedRepairSvc,
+  insertRepairSvc
 } from "../services/repairs.service.js";
 
 /*
  * car depot
  */
-export const pushCarDepotHandler = async (req, res) => {
+export const insertRepairsCtrl = async (req, res) => {
   try {
-    const data = await pushCarDepotSvc(req.body);
+    const data = await insertRepairSvc(req.body);
 
     return res.status(200).json({ message: "insert carDepot", data });
   } catch (error) {
@@ -19,9 +19,9 @@ export const pushCarDepotHandler = async (req, res) => {
       .send({ status: "FAILED", data: { error: error?.message || error } });
   }
 };
-export const getCarDepotHandler = async (req, res) => {
+export const getRepairByCustomerCtrl = async (req, res) => {
   try {
-    const myData = await getCarDepotSvc(req.params.id);
+    const myData = await getRepairsByCustomerSvc(req.params.id);
     return res.status(200).json(myData);
   } catch (error) {
     return res
@@ -30,9 +30,10 @@ export const getCarDepotHandler = async (req, res) => {
   }
 };
 
-export const getUnconnectedCarDepotHandler = async (req, res) => {
+export const getUnconfirmedRepairsSvc = async (req, res) => {
   try {
-    const data = await getUnconfirmedCarDepotSvc();
+    console.log("Bonjour");
+    const data = await getUnconfirmedRepairSvc();
     return res.status(200).json(data);
   } catch (error) {
     return res
@@ -40,13 +41,15 @@ export const getUnconnectedCarDepotHandler = async (req, res) => {
       .send({ status: "FAILED", data: { error: error?.message || error } });
   }
 };
-
 /*
- * to do
+ * @params req :
+ *  1-id of the customer
+ *  2-id of the repair to confirm
+ *  3-to of the repair to confirm
  */
-export const insertToDoCtrl = async (req, res) => {
+export const confirmRepairCtrl = async (req, res) => {
   try {
-    const data = await insertTodoSvc(req.body);
+    const data = await confirmRepairSvc(req.body);
     return res.status(200).json(data);
   } catch (error) {
     console.log(error.status);

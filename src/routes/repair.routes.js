@@ -1,16 +1,16 @@
 import express from "express";
 import {
-  getCarDepotHandler,
-  getUnconnectedCarDepotHandler,
-  insertToDoCtrl,
-  pushCarDepotHandler
+  getRepairByCustomerCtrl,
+  insertRepairsCtrl,
+  confirmRepairCtrl,
+  getUnconfirmedRepairsSvc
 } from "../controllers/repair.controller.js";
 const router = express.Router();
 // repairs
-router.post("/:id", pushCarDepotHandler);
-router.get("/:id", getCarDepotHandler);
-router.get("/unconfirmed", getUnconnectedCarDepotHandler);
+// router.post("/:id", insertRepairsCtrl);
+// router.get("/:id", getRepairByCustomerCtrl);
+router.get("/unconfirmed", getUnconfirmedRepairsSvc);
 // to oos
-router.post("/to-do", insertToDoCtrl);
+router.post("/confirm/:id", confirmRepairCtrl);
 
 export { router as RepairRoute };

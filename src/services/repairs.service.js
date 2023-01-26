@@ -1,36 +1,35 @@
 import { findCustomerByIdMdl } from "../models/customer.model.js";
 import {
-  getCarDepotMdl,
-  getUnconfirmedCarDepotMdl,
-  insertTodoMdl,
-  pushCarDepotMdl
+  getRepairByCustomerMdl,
+  getUnconfirmedRepairMdl,
+  insertRepairMdl
 } from "../models/repair.model.js";
 
 /*
  *depot car
  */
-export const pushCarDepotSvc = async (depot) => {
+export const insertRepairSvc = async (depot) => {
   const user = await findCustomerByIdMdl(depot._id);
-  return await pushCarDepotMdl(user, depot);
+  return await insertRepairMdl(user, depot);
 };
 
-export const getCarDepotSvc = async (id) => {
+export const getRepairsByCustomerSvc = async (id) => {
   try {
-    const repairs = await getCarDepotMdl(id);
+    const repairs = await getRepairByCustomerMdl(id);
     return repairs;
   } catch (error) {
     console.log(error);
   }
 };
 
-export const getUnconfirmedCarDepotSvc = async () => {
-  return await getUnconfirmedCarDepotMdl();
+export const getUnconfirmedRepairSvc = async () => {
+  return await getUnconfirmedRepairMdl();
 };
 
 //
-export const insertTodoSvc = async (data) => {
+export const confirmRepairSvc = async (data) => {
   try {
-    return await insertTodoMdl(data);
+    return await insertRepairMdl(data);
   } catch (error) {
     console.log(error);
   }
