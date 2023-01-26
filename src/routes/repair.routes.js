@@ -14,4 +14,8 @@ router.post("/confirm/:id", confirmRepairCtrl);
 router.post("/:id", insertRepairsCtrl);
 router.get("/:id", getRepairByCustomerCtrl);
 
+//
+router.post("/:id", insertRepairsCtrl);
+router.get("/:id", getRepairByCustomerCtrl);
+
 export { router as RepairRoute };
