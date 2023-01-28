@@ -2,36 +2,50 @@ import { Schema, model } from "mongoose";
 
 const CustomerSchema = new Schema(
   {
-    firstname: String,
-    lastname: String,
-    email: String,
+    firstname: { type: String, required: true },
+    lastname: { type: String, required: true },
+    email: { type: String, required: true },
     credentials: {
-      password: String,
-      roles: [String]
+      password: { type: String, default: "ctmr", required: true },
+      roles: [{ type: String, required: true }]
     },
     repairs: [
       {
         type: new Schema(
           {
-            is_done: Boolean,
-            is_confirmed: Boolean,
-            total_amount: Number,
+            is_done: { type: Boolean, required: true },
+            is_confirmed: { type: Boolean, required: true },
+            total_amount: { type: Number, required: true, default: 0 },
+            total_paid: { type: Number, required: true, default: 0 },
             car: {
-              registration_number: String,
-              brand: String,
-              model: String
+              registration_number: { type: String, required: true },
+              brand: { type: String, required: true },
+              model: { type: String, required: true }
             },
             to_do: [
               {
                 type: new Schema(
                   {
-                    status: Boolean,
-                    label: String,
-                    price: Number,
-                    started_at: Date,
-                    done_at: Date
+                    status: { type: Boolean, default: false },
+                    label: { type: String, required: true },
+                    price: { type: Number, required: true },
+                    started_at: { type: Date, required: true },
+                    done_at: { type: Date, required: true }
                   },
                   { _id: false }
+                )
+              }
+            ],
+            payment: [
+              {
+                type: new Schema(
+                  {
+                    amount: { type: Number, required: true }
+                  },
+                  {
+                    _id: false,
+                    timestamps: true
+                  }
                 )
               }
             ]

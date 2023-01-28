@@ -4,15 +4,20 @@ import {
   insertRepairsCtrl,
   confirmRepairCtrl,
   getUnconfirmedRepairsSvc,
-  getAvancementRepairsCtrl
+  getRepairByCustomerByIdCtrl,
+  getAllRepairCtrl
 } from "../controllers/repair.controller.js";
 const router = express.Router();
-router.post("/avancement", getAvancementRepairsCtrl);
-router.get("/avancement/:customerId/:repairId", getAvancementRepairsCtrl);
+
+
+router.get("", getAllRepairCtrl);
+
+
 // repairs
 router.get("/unconfirmed", getUnconfirmedRepairsSvc);
-// to do
 router.post("/confirm/:id", confirmRepairCtrl);
+//
+router.get("/customer/:customerId/:repairsId", getRepairByCustomerByIdCtrl);
 router.post("/:id", insertRepairsCtrl);
 router.get("/:id", getRepairByCustomerCtrl);
 
