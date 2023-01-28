@@ -58,9 +58,10 @@ export const confirmRepairCtrl = async (req, res) => {
 
 export const getAvancementRepairsCtrl = async (req, res) => {
   try {
-    const data = await getAvancementRepairsSvc(req.body)
-    return res.status(200).json(data)
+    console.log("controller");
+    const data = await getAvancementRepairsSvc(req.body);
+    return res.status(200).json(data);
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
 };

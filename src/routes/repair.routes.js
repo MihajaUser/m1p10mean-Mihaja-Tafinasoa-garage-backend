@@ -7,7 +7,7 @@ import {
   getAvancementRepairsCtrl
 } from "../controllers/repair.controller.js";
 const router = express.Router();
-router.post("/avancement", getAvancementRepairsCtrl)
+router.post("/avancement", getAvancementRepairsCtrl);
 // repairs
 router.get("/unconfirmed", getUnconfirmedRepairsSvc);
 // to do

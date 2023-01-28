@@ -21,12 +21,23 @@ export const getRepairByCustomerMdl = async (id) => {
 
 export const getUnconfirmedRepairMdl = async () => {
   try {
-    console.log("bonjour");
-
-    return await CustomerModel.find({ "repairs.is_confirmed": false }).select(
-      "_id firstname lastname repairs._id repairs.created_at repairs.car.registration_number repairs.car.brand repairs.car.model "
-    );
-  } catch (error) { }
+    return await CustomerModel.aggregate([
+      { $unwind: "$repairs" },
+      { $match: { "repairs.is_confirmed": false } },
+      {
+        $project: {
+          _id: "$lastname",
+          firstname: "$firstname",
+          lastname: "$lastname",
+          "repairs._id": "$repairs._id",
+          "repairs.created_at": "$repairs.created_at",
+          "repairs.car.registration_number": "$repairs.car.registration_number",
+          "repairs.car.brand": "$repairs.car.brand",
+          "repairs.car.model": "$repairs.car.model"
+        }
+      }
+    ]);
+  } catch (error) {}
 };
 
 /*
@@ -50,6 +61,14 @@ export const confirmRepairMdl = async (data) => {
 };
 
 export const getAvancementRepairsMdl = async (data) => {
-  return await CustomerModel.find({ "repairs.to_do.status": true })
-  // return { message: 'dans le model' }
-}
+  try {
+    console.log("Model");
+    return await CustomerModel.aggregate([
+      { $unwind: "$repairs" },
+      { $unwind: "$repairs.to_do" },
+      { $match: { "repairs.to_do.status": true } }
+    ]);
+  } catch (error) {
+    console.log(error);
+  }
+};
