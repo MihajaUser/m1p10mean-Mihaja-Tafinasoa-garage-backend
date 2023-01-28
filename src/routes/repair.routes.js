@@ -4,12 +4,11 @@ import {
   insertRepairsCtrl,
   confirmRepairCtrl,
   getUnconfirmedRepairsSvc,
-  getAvancementRepairsCtrl,
-  getTest
+  getAvancementRepairsCtrl
 } from "../controllers/repair.controller.js";
 const router = express.Router();
-router.get("/avancement/:customerId/:repairId", getAvancementRepairsCtrl)
-router.post("/test", getTest)
+router.post("/avancement", getAvancementRepairsCtrl);
+router.get("/avancement/:customerId/:repairId", getAvancementRepairsCtrl);
 // repairs
 router.get("/unconfirmed", getUnconfirmedRepairsSvc);
 // to do

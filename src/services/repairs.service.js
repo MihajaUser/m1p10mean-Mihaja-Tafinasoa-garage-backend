@@ -39,9 +39,9 @@ export const confirmRepairSvc = async (data) => {
 
 export const getAvancementRepairsSvc = async (data) => {
   try {
-    /// return { message: 'dans repairs svc' }
-    return await getAvancementRepairsMdl({ data });
+    console.log("service");
+    return await getAvancementRepairsMdl(data);
   } catch (error) {
     console.log(error);
   }
-}
+};
