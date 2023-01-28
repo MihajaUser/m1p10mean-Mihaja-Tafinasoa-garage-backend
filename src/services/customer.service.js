@@ -40,6 +40,7 @@ export const loginCustomerSvc = async (useOnLog) => {
   /* Role  */
   let access = false;
   user.credentials.roles.forEach((userRole) => {
+    console.log(userRole + " " + useOnLog.logAs);
     if (userRole === useOnLog.logAs) access = true;
   });
 
