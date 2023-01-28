@@ -18,10 +18,10 @@
     },
     {
       "description": "insert to do",
-      "url": "POST  .../repairs/to-do",
+      "url": "POST  .../repairs/confirm/63d1b0d10a172eb1f5b0b7a2",
       "data sample": {
-        "customerId": "63d032fbd8c3b92dc5653fdc",
-        "repairId": "63d1b0d10a172eb1f5b0b7a2",
+        "customerId": "63d522ee3be16b57739eebd8",
+        "repairId": "63d523943be16b57739eebdb",
         "toDo": [
           {
             "label": "Motor",
