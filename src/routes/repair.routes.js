@@ -9,9 +9,7 @@ import {
 } from "../controllers/repair.controller.js";
 const router = express.Router();
 
-
 router.get("", getAllRepairCtrl);
-
 
 // repairs
 router.get("/unconfirmed", getUnconfirmedRepairsSvc);

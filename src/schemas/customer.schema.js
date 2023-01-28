@@ -13,8 +13,8 @@ const CustomerSchema = new Schema(
       {
         type: new Schema(
           {
-            is_done: { type: Boolean, required: true },
-            is_confirmed: { type: Boolean, required: true },
+            is_done: { type: Boolean, default: false, required: true },
+            is_confirmed: { type: Boolean, default: false, required: true },
             total_amount: { type: Number, required: true, default: 0 },
             total_paid: { type: Number, required: true, default: 0 },
             car: {
