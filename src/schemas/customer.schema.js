@@ -15,7 +15,8 @@ const CustomerSchema = new Schema(
           {
             is_done: Boolean,
             is_confirmed: Boolean,
-            total_amount: Number,
+            total_amount: { type: Number, default: 0 },
+            total_paid: { type: Number, default: 0 },
             car: {
               registration_number: String,
               brand: String,
@@ -25,13 +26,26 @@ const CustomerSchema = new Schema(
               {
                 type: new Schema(
                   {
-                    status: Boolean,
+                    status: { type: Boolean, default: false },
                     label: String,
                     price: Number,
                     started_at: Date,
                     done_at: Date
                   },
                   { _id: false }
+                )
+              }
+            ],
+            payment: [
+              {
+                type: new Schema(
+                  {
+                    amount: Number
+                  },
+                  {
+                    _id: false,
+                    timestamps: true
+                  }
                 )
               }
             ]
