@@ -3,7 +3,9 @@ import {
   confirmRepairMdl,
   getRepairByCustomerMdl,
   getUnconfirmedRepairMdl,
-  insertRepairMdl
+  insertRepairMdl,
+  getRepairByCustomerAndRepairMdl,
+  getAllRepairMdl
 } from "../models/repair.model.js";
 
 /*
@@ -34,4 +36,14 @@ export const confirmRepairSvc = async (data) => {
   } catch (error) {
     console.log(error);
   }
+};
+
+export const getRepairByCustomerAndRepairSvc = async (customerId, repairId) => {
+  try {
+    return await getRepairByCustomerAndRepairMdl(customerId, repairId);
+  } catch (error) {}
+};
+
+export const getAllRepairSvc = async (query) => {
+  return await getAllRepairMdl(query);
 };

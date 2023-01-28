@@ -25,6 +25,7 @@ const CustomerSchema = new Schema(
               {
                 type: new Schema(
                   {
+                    status: Boolean,
                     label: String,
                     price: Number,
                     started_at: Date,

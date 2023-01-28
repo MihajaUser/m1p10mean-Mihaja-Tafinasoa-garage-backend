@@ -1,5 +1,5 @@
 import { CustomerModel } from "../schemas/customer.schema.js";
-
+import { LSHFilterQueryGenerator } from "./../helpers/url.helper.js";
 /*
  * repairs
  */
@@ -21,11 +21,22 @@ export const getRepairByCustomerMdl = async (id) => {
 
 export const getUnconfirmedRepairMdl = async () => {
   try {
-    console.log("bonjour");
-
-    return await CustomerModel.find({ "repairs.is_confirmed": false }).select(
-      "_id firstname lastname repairs._id repairs.created_at repairs.car.registration_number repairs.car.brand repairs.car.model "
-    );
+    return await CustomerModel.aggregate([
+      { $unwind: "$repairs" },
+      { $match: { "repairs.is_confirmed": false } },
+      {
+        $project: {
+          _id: "$lastname",
+          firstname: "$firstname",
+          lastname: "$lastname",
+          "repairs._id": "$repairs._id",
+          "repairs.created_at": "$repairs.created_at",
+          "repairs.car.registration_number": "$repairs.car.registration_number",
+          "repairs.car.brand": "$repairs.car.brand",
+          "repairs.car.model": "$repairs.car.model"
+        }
+      }
+    ]);
   } catch (error) {}
 };
 
@@ -47,4 +58,47 @@ export const confirmRepairMdl = async (data) => {
   } catch (error) {
     console.log(error);
   }
+};
+
+export const getRepairByCustomerAndRepairMdl = async (customerId, repairId) => {
+  try {
+    return await CustomerModel.aggregate([
+      // { $unwind: "$repairs" },
+      { $match: { _id: customerId } }
+    ]);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// export const getAvancementRepairsMdl = async (data) => {
+//   try {
+//     console.log("Model");
+//     return await CustomerModel.aggregate([
+//       { $unwind: "$repairs" },
+//       { $unwind: "$repairs.to_do" },
+//       { $match: { "repairs.to_do.status": true } }
+//     ]);
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
+
+//
+export const getAllRepairMdl = async (query) => {
+  const _generatedQuery = LSHFilterQueryGenerator(query);
+  console.log(_generatedQuery);
+  const page = query.page ? query.page : 1;
+  const step = query.step ? query.step : 5;
+  return {
+    total: await CustomerModel.countDocuments({
+      ..._generatedQuery
+    }),
+    candidates: await CustomerModel.find({
+      ..._generatedQuery
+    })
+      .limit(step * 1)
+      .skip((Number(page) - 1) * step)
+      .exec()
+  };
 };
