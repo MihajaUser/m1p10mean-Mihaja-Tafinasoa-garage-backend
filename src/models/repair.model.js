@@ -26,7 +26,7 @@ export const getUnconfirmedRepairMdl = async () => {
     return await CustomerModel.find({ "repairs.is_confirmed": false }).select(
       "_id firstname lastname repairs._id repairs.created_at repairs.car.registration_number repairs.car.brand repairs.car.model "
     );
-  } catch (error) {}
+  } catch (error) { }
 };
 
 /*
@@ -48,3 +48,8 @@ export const confirmRepairMdl = async (data) => {
     console.log(error);
   }
 };
+
+export const getAvancementRepairsMdl = async (data) => {
+  return await CustomerModel.find({ "repairs.to_do.status": true })
+  // return { message: 'dans le model' }
+}
