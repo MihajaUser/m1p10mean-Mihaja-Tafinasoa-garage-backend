@@ -1,5 +1,5 @@
 import { CustomerModel } from "../schemas/customer.schema.js";
-
+import { LSHFilterQueryGenerator } from "./../helpers/url.helper.js";
 /*
  * repairs
  */
@@ -62,11 +62,9 @@ export const confirmRepairMdl = async (data) => {
 
 export const getRepairByCustomerAndRepairMdl = async (customerId, repairId) => {
   try {
-    console.log("Model");
     return await CustomerModel.aggregate([
-      { $unwind: "$repairs" },
-      { $unwind: "$repairs.to_do" },
-      { $match: { _id: customerId, "repairs._id": repairId } }
+      // { $unwind: "$repairs" },
+      { $match: { _id: customerId } }
     ]);
   } catch (error) {
     console.log(error);
@@ -85,3 +83,22 @@ export const getRepairByCustomerAndRepairMdl = async (customerId, repairId) => {
 //     console.log(error);
 //   }
 // };
+
+//
+export const getAllRepairMdl = async (query) => {
+  const _generatedQuery = LSHFilterQueryGenerator(query);
+  console.log(_generatedQuery);
+  const page = query.page ? query.page : 1;
+  const step = query.step ? query.step : 5;
+  return {
+    total: await CustomerModel.countDocuments({
+      ..._generatedQuery
+    }),
+    candidates: await CustomerModel.find({
+      ..._generatedQuery
+    })
+      .limit(step * 1)
+      .skip((Number(page) - 1) * step)
+      .exec()
+  };
+};
