@@ -60,15 +60,28 @@ export const confirmRepairMdl = async (data) => {
   }
 };
 
-export const getAvancementRepairsMdl = async (data) => {
+export const getRepairByCustomerAndRepairMdl = async (customerId, repairId) => {
   try {
     console.log("Model");
     return await CustomerModel.aggregate([
       { $unwind: "$repairs" },
       { $unwind: "$repairs.to_do" },
-      { $match: { "repairs.to_do.status": true } }
+      { $match: { _id: customerId, "repairs._id": repairId } }
     ]);
   } catch (error) {
     console.log(error);
   }
 };
+
+// export const getAvancementRepairsMdl = async (data) => {
+//   try {
+//     console.log("Model");
+//     return await CustomerModel.aggregate([
+//       { $unwind: "$repairs" },
+//       { $unwind: "$repairs.to_do" },
+//       { $match: { "repairs.to_do.status": true } }
+//     ]);
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };

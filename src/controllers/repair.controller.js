@@ -1,6 +1,6 @@
 import {
   confirmRepairSvc,
-  getAvancementRepairsSvc,
+  getRepairByCustomerAndRepairSvc,
   getRepairsByCustomerSvc,
   getUnconfirmedRepairSvc,
   insertRepairSvc
@@ -56,12 +56,27 @@ export const confirmRepairCtrl = async (req, res) => {
   }
 };
 
-export const getAvancementRepairsCtrl = async (req, res) => {
+export const getRepairByCustomerByIdCtrl = async (req, res) => {
   try {
-    console.log("controller");
-    const data = await getAvancementRepairsSvc(req.body);
+    const data = await getRepairByCustomerAndRepairSvc(
+      req.params.customerId,
+      res.params.repairsId
+    );
     return res.status(200).json(data);
   } catch (error) {
-    console.log(error);
+    return res
+      .status(error?.status || 500)
+      .send({ status: "FAILED", data: { error: error?.message || error } });
   }
 };
+// export const getAvancementRepairsCtrl = async (req, res) => {
+//   try {
+//     console.log("controller");
+//     const data = await getAvancementRepairsSvc(req.body);
+//     return res.status(200).json(data);
+//   } catch (error) {
+//     return res
+//       .status(error?.status || 500)
+//       .send({ status: "FAILED", data: { error: error?.message || error } });
+//   }
+// };
