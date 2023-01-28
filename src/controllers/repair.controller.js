@@ -64,3 +64,7 @@ export const getAvancementRepairsCtrl = async (req, res) => {
     console.log(error)
   }
 };
+export const getTest = async (req, res) => {
+  console.log(" --------------------------------------------affichage du test reussi")
+  return res.status(200).json({ message: "test reussi" })
+}
