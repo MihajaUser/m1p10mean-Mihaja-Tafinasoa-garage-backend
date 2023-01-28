@@ -25,7 +25,7 @@ export const getUnconfirmedRepairMdl = async () => {
       { $match: { "repairs.is_confirmed": false } },
       {
         $project: {
-          _id: "$lastname",
+          _id: "$_id",
           firstname: "$firstname",
           lastname: "$lastname",
           "repairs._id": "$repairs._id",
@@ -36,7 +36,7 @@ export const getUnconfirmedRepairMdl = async () => {
         }
       }
     ]);
-  } catch (error) {}
+  } catch (error) { }
 };
 
 /*
