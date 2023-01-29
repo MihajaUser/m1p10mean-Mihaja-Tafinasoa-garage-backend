@@ -75,7 +75,7 @@ export const getUnconfirmedRepairMdl = async () => {
       //   }
       // }
     ]);
-  } catch (error) { }
+  } catch (error) {}
 };
 //*
 export const confirmRepairMdl = async (data) => {
@@ -244,9 +244,8 @@ export const getRetrievableCarByCustomerMdl = async (customerId) => {
         }
       }
     ]);
-  } catch (error) { }
+  } catch (error) {}
 };
-
 
 export const validationToDoMdl = async (data) => {
   try {
@@ -256,24 +255,26 @@ export const validationToDoMdl = async (data) => {
       (item) => item.id === data.repairId
     );
     const toDoIndex = customer.repairs[repairIndex].to_do.findIndex(
-      (item) => item.id === data.toDoId);
+      (item) => item.id === data.toDoId
+    );
     customer.repairs[repairIndex].to_do[toDoIndex].status = true;
     await customer.save();
-    return { message: "Validation to do succuessfull" }
+    return { message: "Validation to do succuessfull" };
   } catch (error) {
     console.error(error);
-  };
+  }
 };
-export const carRecuparationMdl = async (data) => {
+export const retrieveCarMdl = async (data) => {
   try {
     const customer = await CustomerModel.findById(data.customerId);
     if (!customer) throw new Error("Customer not found");
     const repairIndex = customer.repairs.findIndex(
-      (item) => item.id === data.repairId);
+      (item) => item.id === data.repairId
+    );
     customer.repairs[repairIndex].is_retrieved = true;
     await customer.save();
-    return { message: "recuperation car" }
+    return { message: "recuperation car" };
   } catch (error) {
     console.log(error);
   }
-}
+};

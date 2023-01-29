@@ -11,7 +11,7 @@ import {
   insertRepairSvc,
   insertTodoSvc,
   validationToDoSvc,
-  carRecuparationSvc
+  retrieveCarSvc
 } from "../services/repair.service.js";
 /*
  * car depot
@@ -146,16 +146,16 @@ export const geRetrievableCarByCustomerCtrl = async (req, res) => {
 };
 export const validationToDoCtrl = async (req, res) => {
   try {
-    const data = await validationToDoSvc(req.body)
-    return res.status(200).json(data)
+    const data = await validationToDoSvc(req.body);
+    return res.status(200).json(data);
   } catch (error) {
     console.log(error);
   }
 };
-export const carRecuparationCtrl = async (req, res) => {
+export const retrieveCarCtrl = async (req, res) => {
   try {
-    const data = await carRecuparationSvc(req.body);
-    return res.status(200).json(data)
+    const data = await retrieveCarSvc(req.body);
+    return res.status(200).json(data);
   } catch (error) {
     console.log(error);
   }

@@ -10,9 +10,9 @@ import {
   insertTodoCtrl,
   insertPaymentCtrl,
   geRetrievableCarByCustomerCtrl,
-  getUndoneToDoCtrl
+  getUndoneToDoCtrl,
   validationToDoCtrl,
-  carRecuparationCtrl
+  retrieveCarCtrl
 } from "../controllers/repair.controller.js";
 
 const router = express.Router();
@@ -22,7 +22,7 @@ router.get("", getAllRepairCtrl);
 router.get("/unconfirmed", getUnconfirmedRepairsSvc);
 router.post("/confirm/:id", confirmRepairCtrl);
 router.get("/unpaid/:customerId", getUnpaidRepairCtrl);
-router.post("/todo/:id/validation", validationToDoCtrl)
+router.post("/todo/:id/validation", validationToDoCtrl);
 // * do to
 router.post("/:idRepair/to-do", insertTodoCtrl);
 router.get("/todo/undone", getUndoneToDoCtrl);
@@ -30,7 +30,7 @@ router.get("/todo/undone", getUndoneToDoCtrl);
 router.post("/payment", insertPaymentCtrl);
 // * cars
 router.get("retrievable/:customerId", geRetrievableCarByCustomerCtrl);
-router.post("/recuperation/:customerId", carRecuparationCtrl);
+router.post("/recuperation/:customerId", retrieveCarCtrl);
 // * order
 router.get("/customer/:customerId/:repairsId", getRepairByCustomerByIdCtrl);
 router.post("/:id", insertRepairsCtrl);
