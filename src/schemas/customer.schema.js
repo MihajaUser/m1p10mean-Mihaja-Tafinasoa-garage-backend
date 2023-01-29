@@ -15,6 +15,7 @@ const CustomerSchema = new Schema(
           {
             is_done: { type: Boolean, default: false, required: true },
             is_confirmed: { type: Boolean, default: false, required: true },
+            is_retrieved: { type: Boolean, default: false, required: true },
             total_amount: { type: Number, required: true, default: 0 },
             total_paid: { type: Number, required: true, default: 0 },
             car: {
@@ -40,7 +41,7 @@ const CustomerSchema = new Schema(
               {
                 type: new Schema(
                   {
-                    status: { type: Boolean, required: true, default: false },
+                    status: { type: Boolean, required: true, default: true },
                     amount: { type: Number, required: true }
                   },
                   {
