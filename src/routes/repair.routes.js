@@ -5,7 +5,8 @@ import {
   confirmRepairCtrl,
   getUnconfirmedRepairsSvc,
   getRepairByCustomerByIdCtrl,
-  getAllRepairCtrl
+  getAllRepairCtrl,
+  insertTodoCtrl
 } from "../controllers/repair.controller.js";
 const router = express.Router();
 
@@ -14,6 +15,8 @@ router.get("", getAllRepairCtrl);
 // repairs
 router.get("/unconfirmed", getUnconfirmedRepairsSvc);
 router.post("/confirm/:id", confirmRepairCtrl);
+//todo
+router.post("/:idRepair/to-do", insertTodoCtrl);
 //
 router.get("/customer/:customerId/:repairsId", getRepairByCustomerByIdCtrl);
 router.post("/:id", insertRepairsCtrl);

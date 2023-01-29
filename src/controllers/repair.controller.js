@@ -4,7 +4,8 @@ import {
   getRepairByCustomerAndRepairSvc,
   getRepairsByCustomerSvc,
   getUnconfirmedRepairSvc,
-  insertRepairSvc
+  insertRepairSvc,
+  insertTodoSvc
 } from "../services/repair.service.js";
 
 /*
@@ -80,3 +81,8 @@ export const getAllRepairCtrl = async (req, res) => {
       .send({ status: "FAILED", data: { error: error?.message || error } });
   }
 };
+
+export const insertTodoCtrl = async (req, res) => {
+  const data = await insertTodoSvc(req.body)
+  return res.status(200).json(data)
+}
