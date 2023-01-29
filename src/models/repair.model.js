@@ -21,22 +21,61 @@ export const getRepairByCustomerMdl = async (id) => {
 export const getUnconfirmedRepairMdl = async () => {
   try {
     return await CustomerModel.aggregate([
-      { $unwind: "$repairs" },
-      { $match: { "repairs.is_confirmed": false } },
+      // { $match: { "repairs.is_confirmed": false } },
       {
         $project: {
-          _id: "$_id",
-          firstname: "$firstname",
-          lastname: "$lastname",
-          "repairs._id": "$repairs._id",
-          "repairs.created_at": "$repairs.created_at",
-          "repairs.car.registration_number": "$repairs.car.registration_number",
-          "repairs.car.brand": "$repairs.car.brand",
-          "repairs.car.model": "$repairs.car.model"
+          list: {
+            $filter: {
+              input: "$repairs",
+              as: "item",
+              cond: { $eq: ["$$item.is_confirmed", true] }
+            }
+          }
         }
       }
+
+      // {
+      //   $project: {
+      //     _id: "$_id",
+      //     firstname: "$firstname",
+      //     lastname: "$lastname",
+      //     "repairs._id": "$repairs._id",
+      //     "repairs.created_at": "$repairs.createdAt",
+      //     "repairs.car.registration_number": "$repairs.car.registration_number",
+      //     "repairs.car.brand": "$repairs.car.brand",
+      //     "repairs.car.model": "$repairs.car.model"
+      //   }
+      // },
+      // {
+      //   $replaceWith: {
+      //     $arrayElemAt: [
+      //       {
+      //         $filter: {
+      //           input: "$repairs",
+      //           cond: { $eq: ["$$this.is_confirmed", true] }
+      //         }
+      //       },
+      //       0
+      //     ]
+      //   }
+      // }
+      // { $unwind: "$repairs" },
+      // { $match: { "repairs.is_confirmed": false } }
+      // ,
+      // {
+      //   $project: {
+      //     _id: "$_id",
+      //     firstname: "$firstname",
+      //     lastname: "$lastname",
+      //     "repairs._id": "$repairs._id",
+      //     "repairs.created_at": "$repairs.createdAt",
+      //     "repairs.car.registration_number": "$repairs.car.registration_number",
+      //     "repairs.car.brand": "$repairs.car.brand",
+      //     "repairs.car.model": "$repairs.car.model"
+      //   }
+      // }
     ]);
-  } catch (error) { }
+  } catch (error) {}
 };
 
 /*
@@ -75,19 +114,6 @@ export const getRepairByCustomerAndRepairMdl = async (customerId, repairId) => {
     console.log(error);
   }
 };
-
-// export const getAvancementRepairsMdl = async (data) => {
-//   try {
-//     console.log("Model");
-//     return await CustomerModel.aggregate([
-//       { $unwind: "$repairs" },
-//       { $unwind: "$repairs.to_do" },
-//       { $match: { "repairs.to_do.status": true } }
-//     ]);
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
 
 //
 export const getAllRepairMdl = async (query) => {
