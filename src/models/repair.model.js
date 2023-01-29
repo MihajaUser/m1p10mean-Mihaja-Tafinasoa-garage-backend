@@ -150,7 +150,7 @@ export const getUnpaidRepairMdl = async (customerId) => {
         }
       }
     ]);
-  } catch (error) {}
+  } catch (error) { }
 };
 //
 export const getAllRepairMdl = async (query) => {
@@ -170,5 +170,3 @@ export const getAllRepairMdl = async (query) => {
       .exec()
   };
 };
-
-
