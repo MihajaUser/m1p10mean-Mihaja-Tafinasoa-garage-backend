@@ -96,6 +96,6 @@ export const getUnpaidRepairCtrl = async (req, res) => {
   }
 };
 export const insertTodoCtrl = async (req, res) => {
-  const data = await insertTodoSvc(req.body)
-  return res.status(200).json(data)
-}
+  const data = await insertTodoSvc(req.body);
+  return res.status(200).json(data);
+};
