@@ -1,9 +1,7 @@
 import { CustomerModel } from "../schemas/customer.schema.js";
 import { LSHFilterQueryGenerator } from "./../helpers/url.helper.js";
 import mongoose from "mongoose";
-/*
- * repairs
- */
+//*
 export const insertRepairMdl = async (customer, depot) => {
   try {
     customer.repairs.push(depot.repairs);
@@ -18,7 +16,6 @@ export const getRepairByCustomerMdl = async (id) => {
     _id: 1
   });
 };
-
 export const getUnconfirmedRepairMdl = async () => {
   try {
     return await CustomerModel.aggregate([
@@ -78,13 +75,9 @@ export const getUnconfirmedRepairMdl = async () => {
       //   }
       // }
     ]);
-  } catch (error) { }
+  } catch (error) {}
 };
-
-/*
- *to do
- */
-
+//*
 export const confirmRepairMdl = async (data) => {
   try {
     const customer = await CustomerModel.findById(data.customerId);
@@ -135,7 +128,6 @@ export const getRepairByCustomerAndRepairMdl = async (customerId, repairId) => {
     console.log(error);
   }
 };
-
 export const getUnpaidRepairMdl = async (customerId) => {
   try {
     console.log(customerId);
@@ -176,3 +168,43 @@ export const getAllRepairMdl = async (query) => {
       .exec()
   };
 };
+export const insertPaymentMdl = async (data) => {
+  try {
+    const customer = await CustomerModel.findById(data.customerId);
+    if (!customer) throw new Error("Customer not found");
+    const repairIndex = customer.repairs.findIndex(
+      (item) => item.id === data.repairId
+    );
+    customer.repairs[repairIndex].payment.push(data.payment);
+    customer.repairs[repairIndex].total_paid = customer.repairs[
+      repairIndex
+    ].payment.reduce((accumulator, object) => {
+      return accumulator + object.amount;
+    }, 0);
+    console.log(customer.repairs[0]);
+    return await customer.save();
+  } catch (error) {
+    console.log(error);
+  }
+};
+//*
+export const getRetrievableCarByCustomerMdl = async (customer) => {
+  try {
+    return await CustomerModel.aggregate([
+      // { $match: { "repairs.is_confirmed": false } },
+      {
+        $project: {
+          repairs: {
+            $filter: {
+              input: "$repairs",
+              as: "item",
+              cond: [{ $eq: ["$$item.total_amount", "$$item.total_paid"] }]
+            }
+          }
+        }
+      }
+    ]);
+  } catch (error) {}
+};
+
+export const getRetrievableCarMdl = () => {};

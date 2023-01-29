@@ -5,8 +5,7 @@ import jwt from "jsonwebtoken";
 import { confirmRegistrationMailSvc } from "./mail.service.js";
 import {
   insertCustomerMdl,
-  findCustomerByEmailMdl,
-  paymentMdl
+  findCustomerByEmailMdl
 } from "../models/customer.model.js";
 
 const { genSalt, hash, compare } = bcrypt;
@@ -62,10 +61,3 @@ export const loginCustomerSvc = async (useOnLog) => {
     loggedAs: useOnLog.logAs
   };
 };
-export const paymentSvc = async (data) => {
-  try {
-    return await paymentMdl(data);
-  } catch (error) {
-    console.log(error);
-  }
-}

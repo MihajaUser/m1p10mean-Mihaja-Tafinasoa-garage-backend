@@ -1,7 +1,6 @@
 import {
   insertCustomerSvc,
-  loginCustomerSvc,
-  paymentSvc
+  loginCustomerSvc
 } from "../services/customer.service.js";
 
 export const getAllCustomerHandler = (req, res) => {
@@ -31,8 +30,3 @@ export const signInCustomerHandler = async (req, res) => {
       .send({ status: "FAILED", data: { error: error?.message || error } });
   }
 };
-
-export const paymentCtrl = async (req, res) => {
-  const payment = await paymentSvc(req.body);
-  res.status(200).json(payment)
-}
