@@ -24,7 +24,7 @@ export const getUnconfirmedRepairMdl = async () => {
       // { $match: { "repairs.is_confirmed": false } },
       {
         $project: {
-          list: {
+          repairs: {
             $filter: {
               input: "$repairs",
               as: "item",
@@ -33,7 +33,6 @@ export const getUnconfirmedRepairMdl = async () => {
           }
         }
       }
-
       // {
       //   $project: {
       //     _id: "$_id",
