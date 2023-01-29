@@ -99,28 +99,8 @@ export const confirmRepairMdl = async (data) => {
     console.log(error);
   }
 };
-export const insertTodoMdl = async (data) => {
-  try {
-    const customer = await CustomerModel.findById(data.customerId);
-    if (!customer) throw new Error("Customer not found");
-    const repair = customer.repairs.find((item) => item.id === data.repairId);
-    const tempArray = Array.prototype.concat(repair.to_do, data.toDo);
-    const repairIndex = customer.repairs.findIndex(
-      (item) => item.id === data.repairId
-    );
-    customer.repairs[repairIndex].to_do = tempArray;
-    console.log(customer.repairs[repairIndex]);
-    customer.repairs[repairIndex].total_amount = customer.repairs[
-      repairIndex
-    ].to_do.reduce((accumulator, object) => {
-      return accumulator + object.price;
-    }, 0);
-    await customer.save();
-    return { message: "insert todo successfully" };
-  } catch (error) {
-    console.log(error);
-  }
-};
+
+//*
 export const getRepairByCustomerAndRepairMdl = async (customerId, repairId) => {
   try {
     return await CustomerModel.aggregate([{ $match: { _id: customerId } }]);
@@ -130,8 +110,6 @@ export const getRepairByCustomerAndRepairMdl = async (customerId, repairId) => {
 };
 export const getUnpaidRepairMdl = async (customerId) => {
   try {
-    console.log(customerId);
-
     return await CustomerModel.aggregate([
       { $match: { _id: mongoose.Types.ObjectId(customerId) } },
       {
@@ -187,11 +165,73 @@ export const insertPaymentMdl = async (data) => {
     console.log(error);
   }
 };
+
+// *
+export const insertTodoMdl = async (data) => {
+  try {
+    const customer = await CustomerModel.findById(data.customerId);
+    if (!customer) throw new Error("Customer not found");
+    const repair = customer.repairs.find((item) => item.id === data.repairId);
+    const tempArray = Array.prototype.concat(repair.to_do, data.toDo);
+    const repairIndex = customer.repairs.findIndex(
+      (item) => item.id === data.repairId
+    );
+    customer.repairs[repairIndex].to_do = tempArray;
+    console.log(customer.repairs[repairIndex]);
+    customer.repairs[repairIndex].total_amount = customer.repairs[
+      repairIndex
+    ].to_do.reduce((accumulator, object) => {
+      return accumulator + object.price;
+    }, 0);
+    await customer.save();
+    return { message: "insert todo successfully" };
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getUnDoneTodoMdl = async () => {
+  console.log("mdl");
+  try {
+    const data = await CustomerModel.aggregate([
+      {
+        $project: {
+          repairs: {
+            $map: {
+              input: "$repairs",
+              as: "repairs",
+              in: {
+                $mergeObjects: [
+                  "$$repairs",
+                  {
+                    to_do: {
+                      $filter: {
+                        input: "$$repairs.to_do",
+                        as: "toDo",
+                        cond: {
+                          $eq: ["$$toDo.status", false]
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    ]);
+    console.log(data);
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
 //*
-export const getRetrievableCarByCustomerMdl = async (customer) => {
+export const getRetrievableCarByCustomerMdl = async (customerId) => {
   try {
     return await CustomerModel.aggregate([
-      // { $match: { "repairs.is_confirmed": false } },
+      { $match: { _id: mongoose.Types.ObjectId(customerId) } },
       {
         $project: {
           repairs: {

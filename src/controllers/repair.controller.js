@@ -4,6 +4,7 @@ import {
   getRepairByCustomerAndRepairSvc,
   getRepairsByCustomerSvc,
   getRetrievableCarByCustomerSvc,
+  getUnDoneTodoSvc,
   getUnconfirmedRepairSvc,
   getUnpaidRepairSvc,
   insertPaymentSvc,
@@ -97,10 +98,21 @@ export const getUnpaidRepairCtrl = async (req, res) => {
       .send({ status: "FAILED", data: { error: error?.message || error } });
   }
 };
-
+// * todo
 export const insertTodoCtrl = async (req, res) => {
   try {
     const data = await insertTodoSvc(req.body);
+    return res.status(200).json(data);
+  } catch (error) {
+    return res
+      .status(error?.status || 500)
+      .send({ status: "FAILED", data: { error: error?.message || error } });
+  }
+};
+export const getUndoneToDoCtrl = async (req, res) => {
+  console.log("ctrl");
+  try {
+    const data = await getUnDoneTodoSvc();
     return res.status(200).json(data);
   } catch (error) {
     return res

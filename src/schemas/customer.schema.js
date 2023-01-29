@@ -32,7 +32,7 @@ const CustomerSchema = new Schema(
                     started_at: { type: Date, required: true },
                     done_at: { type: Date, required: true }
                   },
-                  { _id: false }
+                  { _id: true }
                 )
               }
             ],
@@ -44,7 +44,7 @@ const CustomerSchema = new Schema(
                     amount: { type: Number, required: true }
                   },
                   {
-                    _id: false,
+                    _id: true,
                     timestamps: false
                   }
                 )

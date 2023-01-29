@@ -9,7 +9,8 @@ import {
   getUnpaidRepairCtrl,
   insertTodoCtrl,
   insertPaymentCtrl,
-  geRetrievableCarByCustomerCtrl
+  geRetrievableCarByCustomerCtrl,
+  getUndoneToDoCtrl
 } from "../controllers/repair.controller.js";
 
 const router = express.Router();
@@ -21,6 +22,7 @@ router.post("/confirm/:id", confirmRepairCtrl);
 router.get("/unpaid/:customerId", getUnpaidRepairCtrl);
 // * do to
 router.post("/:idRepair/to-do", insertTodoCtrl);
+router.get("/todo/undone", getUndoneToDoCtrl);
 // * payment
 router.post("/payment", insertPaymentCtrl);
 // * cars
