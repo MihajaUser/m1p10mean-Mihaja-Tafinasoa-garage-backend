@@ -1,7 +1,7 @@
 diag 
 
 a faire 
-    avancement (affichage)
+   //avancement (affichage)
     insert paiement (affichage)
     validation paiement (affichage)
     facture(front back)
