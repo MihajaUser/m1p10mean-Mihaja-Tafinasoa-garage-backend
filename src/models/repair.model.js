@@ -24,6 +24,9 @@ export const getUnconfirmedRepairMdl = async () => {
       // { $match: { "repairs.is_confirmed": false } },
       {
         $project: {
+          _id: "$_id",
+          firstname: "$firstname",
+          lastname: "$lastname",
           repairs: {
             $filter: {
               input: "$repairs",
@@ -44,7 +47,7 @@ export const getUnconfirmedRepairMdl = async () => {
       //     "repairs.car.brand": "$repairs.car.brand",
       //     "repairs.car.model": "$repairs.car.model"
       //   }
-      // },
+      // }
       // {
       //   $replaceWith: {
       //     $arrayElemAt: [
