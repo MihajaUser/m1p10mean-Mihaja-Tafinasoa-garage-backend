@@ -12,17 +12,15 @@ import {
   getRetrievableCarByCustomerMdl,
   getUnDoneTodoMdl,
   validationToDoMdl,
-  retrieveCarMdl
+  retrieveCarMdl,
+  getAllUndoneRepairsMdl
 } from "../models/repair.model.js";
 
-/*
- *depot car
- */
+// * repair
 export const insertRepairSvc = async (depot) => {
   const user = await findCustomerByIdMdl(depot._id);
   return await insertRepairMdl(user, depot);
 };
-
 export const getRepairsByCustomerSvc = async (id) => {
   try {
     const repairs = await getRepairByCustomerMdl(id);
@@ -31,12 +29,9 @@ export const getRepairsByCustomerSvc = async (id) => {
     console.log(error);
   }
 };
-
 export const getUnconfirmedRepairSvc = async () => {
   return await getUnconfirmedRepairMdl();
 };
-
-//
 export const confirmRepairSvc = async (data) => {
   try {
     return await confirmRepairMdl(data);
@@ -44,23 +39,27 @@ export const confirmRepairSvc = async (data) => {
     console.log(error);
   }
 };
-
 export const getRepairByCustomerAndRepairSvc = async (customerId, repairId) => {
   try {
     return await getRepairByCustomerAndRepairMdl(customerId, repairId);
   } catch (error) {}
 };
-
 export const getUnpaidRepairSvc = async (customerId) => {
   try {
     return await getUnpaidRepairMdl(customerId);
   } catch (error) {}
 };
-
 export const getAllRepairSvc = async (query) => {
   return await getAllRepairMdl(query);
 };
-// * to od
+export const getAllUndoneRepairsSvc = async () => {
+  try {
+    return await getAllUndoneRepairsMdl();
+  } catch (error) {
+    console.log(error);
+  }
+};
+// * to do
 export const insertTodoSvc = async (query) => {
   return await insertTodoMdl(query);
 };

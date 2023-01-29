@@ -11,11 +11,10 @@ import {
   insertRepairSvc,
   insertTodoSvc,
   validationToDoSvc,
-  retrieveCarSvc
+  retrieveCarSvc,
+  getAllUndoneRepairsSvc
 } from "../services/repair.service.js";
-/*
- * car depot
- */
+// * repairs
 export const insertRepairsCtrl = async (req, res) => {
   try {
     const data = await insertRepairSvc(req.body);
@@ -26,7 +25,6 @@ export const insertRepairsCtrl = async (req, res) => {
       .send({ status: "FAILED", data: { error: error?.message || error } });
   }
 };
-
 export const getRepairByCustomerCtrl = async (req, res) => {
   try {
     const myData = await getRepairsByCustomerSvc(req.params.id);
@@ -37,7 +35,6 @@ export const getRepairByCustomerCtrl = async (req, res) => {
       .send({ status: "FAILED", data: { error: error?.message || error } });
   }
 };
-
 export const getUnconfirmedRepairsSvc = async (req, res) => {
   try {
     const data = await getUnconfirmedRepairSvc();
@@ -48,13 +45,6 @@ export const getUnconfirmedRepairsSvc = async (req, res) => {
       .send({ status: "FAILED", data: { error: error?.message || error } });
   }
 };
-
-/*
- * @params req :
- *  1-id of the customer
- *  2-id of the repair to confirm
- *  3-to of the repair to confirm
- */
 export const confirmRepairCtrl = async (req, res) => {
   try {
     console.log("Bonjour");
@@ -64,7 +54,6 @@ export const confirmRepairCtrl = async (req, res) => {
     console.log(error.status);
   }
 };
-
 export const getRepairByCustomerByIdCtrl = async (req, res) => {
   try {
     const data = await getRepairByCustomerAndRepairSvc(
@@ -78,7 +67,6 @@ export const getRepairByCustomerByIdCtrl = async (req, res) => {
       .send({ status: "FAILED", data: { error: error?.message || error } });
   }
 };
-
 export const getAllRepairCtrl = async (req, res) => {
   try {
     const data = await getAllRepairSvc(req.query);
@@ -89,7 +77,6 @@ export const getAllRepairCtrl = async (req, res) => {
       .send({ status: "FAILED", data: { error: error?.message || error } });
   }
 };
-
 export const getUnpaidRepairCtrl = async (req, res) => {
   try {
     const data = await getUnpaidRepairSvc(req.params.customerId);
@@ -99,6 +86,12 @@ export const getUnpaidRepairCtrl = async (req, res) => {
       .status(error?.status || 500)
       .send({ status: "FAILED", data: { error: error?.message || error } });
   }
+};
+export const getAllUndoneRepairCtrl = async (req, res) => {
+  try {
+    const data = await getAllUndoneRepairsSvc();
+    return res.status(200).json(data);
+  } catch (error) {}
 };
 // * todo
 export const insertTodoCtrl = async (req, res) => {

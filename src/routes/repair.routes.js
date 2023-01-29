@@ -12,7 +12,8 @@ import {
   geRetrievableCarByCustomerCtrl,
   getUndoneToDoCtrl,
   validationToDoCtrl,
-  retrieveCarCtrl
+  retrieveCarCtrl,
+  getAllUndoneRepairCtrl
 } from "../controllers/repair.controller.js";
 
 const router = express.Router();
@@ -23,6 +24,7 @@ router.get("/unconfirmed", getUnconfirmedRepairsSvc);
 router.post("/confirm/:id", confirmRepairCtrl);
 router.get("/unpaid/:customerId", getUnpaidRepairCtrl);
 router.post("/todo/:id/validation", validationToDoCtrl);
+router.get("/undone", getAllUndoneRepairCtrl);
 // * do to
 router.post("/:idRepair/to-do", insertTodoCtrl);
 router.get("/todo/undone", getUndoneToDoCtrl);

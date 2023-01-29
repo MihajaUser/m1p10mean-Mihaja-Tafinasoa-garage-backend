@@ -100,7 +100,7 @@ export const confirmRepairMdl = async (data) => {
   }
 };
 
-//*
+//* repairs
 export const getRepairByCustomerAndRepairMdl = async (customerId, repairId) => {
   try {
     return await CustomerModel.aggregate([{ $match: { _id: customerId } }]);
@@ -128,7 +128,6 @@ export const getUnpaidRepairMdl = async (customerId) => {
     console.log(error);
   }
 };
-//
 export const getAllRepairMdl = async (query) => {
   const _generatedQuery = LSHFilterQueryGenerator(query);
   console.log(_generatedQuery);
@@ -165,8 +164,32 @@ export const insertPaymentMdl = async (data) => {
     console.log(error);
   }
 };
-
-// *
+export const getAllUndoneRepairsMdl = async () => {
+  return await CustomerModel.aggregate([
+    {
+      $project: {
+        _id: "$_id",
+        firstname: "$firstname",
+        lastname: "$lastname",
+        repairs: {
+          $filter: {
+            input: "$repairs",
+            as: "item",
+            cond: {
+              $and: [
+                {
+                  $eq: ["$$repairs.is_done", false]
+                },
+                { $eq: ["$$repairs.is_retrieved", false] }
+              ]
+            }
+          }
+        }
+      }
+    }
+  ]);
+};
+// * todo
 export const insertTodoMdl = async (data) => {
   try {
     const customer = await CustomerModel.findById(data.customerId);
@@ -189,9 +212,7 @@ export const insertTodoMdl = async (data) => {
     console.log(error);
   }
 };
-
 export const getUnDoneTodoMdl = async () => {
-  console.log("mdl");
   try {
     const data = await CustomerModel.aggregate([
       {
@@ -221,13 +242,29 @@ export const getUnDoneTodoMdl = async () => {
         }
       }
     ]);
-    console.log(data);
     return data;
   } catch (error) {
     console.log(error);
   }
 };
-//*
+export const validationToDoMdl = async (data) => {
+  try {
+    const customer = await CustomerModel.findById(data.customerId);
+    if (!customer) throw new Error("Customer not found");
+    const repairIndex = customer.repairs.findIndex(
+      (item) => item.id === data.repairId
+    );
+    const toDoIndex = customer.repairs[repairIndex].to_do.findIndex(
+      (item) => item.id === data.toDoId
+    );
+    customer.repairs[repairIndex].to_do[toDoIndex].status = true;
+    await customer.save();
+    return { message: "Validation to do succuessfull" };
+  } catch (error) {
+    console.error(error);
+  }
+};
+// * car
 export const getRetrievableCarByCustomerMdl = async (customerId) => {
   try {
     return await CustomerModel.aggregate([
@@ -245,24 +282,6 @@ export const getRetrievableCarByCustomerMdl = async (customerId) => {
       }
     ]);
   } catch (error) {}
-};
-
-export const validationToDoMdl = async (data) => {
-  try {
-    const customer = await CustomerModel.findById(data.customerId);
-    if (!customer) throw new Error("Customer not found");
-    const repairIndex = customer.repairs.findIndex(
-      (item) => item.id === data.repairId
-    );
-    const toDoIndex = customer.repairs[repairIndex].to_do.findIndex(
-      (item) => item.id === data.toDoId
-    );
-    customer.repairs[repairIndex].to_do[toDoIndex].status = true;
-    await customer.save();
-    return { message: "Validation to do succuessfull" };
-  } catch (error) {
-    console.error(error);
-  }
 };
 export const retrieveCarMdl = async (data) => {
   try {
