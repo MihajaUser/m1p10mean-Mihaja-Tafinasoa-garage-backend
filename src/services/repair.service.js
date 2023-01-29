@@ -10,7 +10,8 @@ import {
   insertTodoMdl,
   insertPaymentMdl,
   getRetrievableCarByCustomerMdl,
-  validationToDoMdl
+  validationToDoMdl,
+  carRecuparationMdl
 
 } from "../models/repair.model.js";
 
@@ -79,6 +80,13 @@ export const getRetrievableCarByCustomerSvc = async (customerId) => {
 export const validationToDoSvc = async (data) => {
   try {
     return await validationToDoMdl(data);
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const carRecuparationSvc = async (data) => {
+  try {
+    return await carRecuparationMdl(data);
   } catch (error) {
     console.log(error);
   }

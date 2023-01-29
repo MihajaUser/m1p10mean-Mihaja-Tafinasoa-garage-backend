@@ -224,3 +224,16 @@ export const validationToDoMdl = async (data) => {
     console.error(error);
   };
 };
+export const carRecuparationMdl = async (data) => {
+  try {
+    const customer = await CustomerModel.findById(data.customerId);
+    if (!customer) throw new Error("Customer not found");
+    const repairIndex = customer.repairs.findIndex(
+      (item) => item.id === data.repairId);
+    customer.repairs[repairIndex].is_retrieved = true;
+    await customer.save();
+    return { message: "recuperation car" }
+  } catch (error) {
+    console.log(error);
+  }
+}

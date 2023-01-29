@@ -9,7 +9,8 @@ import {
   insertPaymentSvc,
   insertRepairSvc,
   insertTodoSvc,
-  validationToDoSvc
+  validationToDoSvc,
+  carRecuparationSvc
 } from "../services/repair.service.js";
 /*
  * car depot
@@ -138,4 +139,12 @@ export const validationToDoCtrl = async (req, res) => {
   } catch (error) {
     console.log(error);
   }
-}
+};
+export const carRecuparationCtrl = async (req, res) => {
+  try {
+    const data = await carRecuparationSvc(req.body);
+    return res.status(200).json(data)
+  } catch (error) {
+    console.log(error);
+  }
+};

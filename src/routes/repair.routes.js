@@ -10,7 +10,8 @@ import {
   insertTodoCtrl,
   insertPaymentCtrl,
   geRetrievableCarByCustomerCtrl,
-  validationToDoCtrl
+  validationToDoCtrl,
+  carRecuparationCtrl
 } from "../controllers/repair.controller.js";
 
 const router = express.Router();
@@ -27,6 +28,7 @@ router.post("/:idRepair/to-do", insertTodoCtrl);
 router.post("/payment", insertPaymentCtrl);
 // * cars
 router.get("retrievable/:customerId", geRetrievableCarByCustomerCtrl);
+router.post("/recuperation/:customerId", carRecuparationCtrl);
 // * order
 router.get("/customer/:customerId/:repairsId", getRepairByCustomerByIdCtrl);
 router.post("/:id", insertRepairsCtrl);
