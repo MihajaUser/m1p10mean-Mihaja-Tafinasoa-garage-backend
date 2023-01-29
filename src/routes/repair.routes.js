@@ -6,17 +6,18 @@ import {
   getUnconfirmedRepairsSvc,
   getRepairByCustomerByIdCtrl,
   getAllRepairCtrl,
+  getUnpaidRepairCtrl,
   insertTodoCtrl
 } from "../controllers/repair.controller.js";
-import { getUnconfirmedRepairSvc } from "../services/repair.service.js";
+
 const router = express.Router();
 
 router.get("", getAllRepairCtrl);
 // repairs
 router.get("/unconfirmed", getUnconfirmedRepairsSvc);
 router.post("/confirm/:id", confirmRepairCtrl);
-router.get("/unpaid/:customerId", getUnconfirmedRepairSvc);
-//todo
+router.get("/unpaid/:customerId", getUnpaidRepairCtrl);
+// todo
 router.post("/:idRepair/to-do", insertTodoCtrl);
 //
 router.get("/customer/:customerId/:repairsId", getRepairByCustomerByIdCtrl);

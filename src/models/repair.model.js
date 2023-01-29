@@ -1,5 +1,6 @@
 import { CustomerModel } from "../schemas/customer.schema.js";
 import { LSHFilterQueryGenerator } from "./../helpers/url.helper.js";
+import mongoose from "mongoose";
 /*
  * repairs
  */
@@ -108,21 +109,25 @@ export const confirmRepairMdl = async (data) => {
 export const insertTodoMdl = async (data) => {
   try {
     const customer = await CustomerModel.findById(data.customerId);
-    if (!customer) throw new Error('Customer not found');
+    if (!customer) throw new Error("Customer not found");
     const repair = customer.repairs.find((item) => item.id === data.repairId);
     const tempArray = Array.prototype.concat(repair.to_do, data.toDo);
-    const repairIndex = customer.repairs.findIndex(item => item.id === data.repairId);
+    const repairIndex = customer.repairs.findIndex(
+      (item) => item.id === data.repairId
+    );
     customer.repairs[repairIndex].to_do = tempArray;
-    console.log(customer.repairs[repairIndex])
-    customer.repairs[repairIndex].total_amount = customer.repairs[repairIndex].to_do.reduce((accumulator, object) => {
+    console.log(customer.repairs[repairIndex]);
+    customer.repairs[repairIndex].total_amount = customer.repairs[
+      repairIndex
+    ].to_do.reduce((accumulator, object) => {
       return accumulator + object.price;
     }, 0);
     await customer.save();
-    return { message: "insert todo successfully" }
+    return { message: "insert todo successfully" };
   } catch (error) {
     console.log(error);
   }
-}
+};
 export const getRepairByCustomerAndRepairMdl = async (customerId, repairId) => {
   try {
     return await CustomerModel.aggregate([{ $match: { _id: customerId } }]);
@@ -133,24 +138,25 @@ export const getRepairByCustomerAndRepairMdl = async (customerId, repairId) => {
 
 export const getUnpaidRepairMdl = async (customerId) => {
   try {
+    console.log(customerId);
+
     return await CustomerModel.aggregate([
-      { $match: { _id: customerId } },
+      { $match: { _id: mongoose.Types.ObjectId(customerId) } },
       {
         $project: {
-          _id: "$_id",
-          firstname: "$firstname",
-          lastname: "$lastname",
           repairs: {
             $filter: {
               input: "$repairs",
               as: "item",
-              cond: { $lt: ["$$item.total_amount", "$$item.total_paid"] }
+              cond: { $gt: ["$$item.total_amount", "$$item.total_paid"] }
             }
           }
         }
       }
     ]);
-  } catch (error) { }
+  } catch (error) {
+    console.log(error);
+  }
 };
 //
 export const getAllRepairMdl = async (query) => {

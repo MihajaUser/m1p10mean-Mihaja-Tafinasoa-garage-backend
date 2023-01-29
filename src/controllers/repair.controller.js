@@ -88,7 +88,7 @@ export const getAllRepairCtrl = async (req, res) => {
 export const getUnpaidRepairCtrl = async (req, res) => {
   try {
     const data = await getUnpaidRepairSvc(req.params.customerId);
-    return res.status(200).json(data);
+    return res.status(200).json(data[0]);
   } catch (error) {
     return res
       .status(error?.status || 500)
@@ -96,6 +96,6 @@ export const getUnpaidRepairCtrl = async (req, res) => {
   }
 };
 export const insertTodoCtrl = async (req, res) => {
-  const data = await insertTodoSvc(req.body)
-  return res.status(200).json(data)
-}
+  const data = await insertTodoSvc(req.body);
+  return res.status(200).json(data);
+};
