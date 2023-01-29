@@ -16,6 +16,9 @@ router.get("", getAllRepairCtrl);
 router.get("/unconfirmed", getUnconfirmedRepairsSvc);
 router.post("/confirm/:id", confirmRepairCtrl);
 router.get("/unpaid/:customerId", getUnpaidRepairCtrl);
+router.get("/unpaid/:customerId", getUnconfirmedRepairSvc);
+//todo
+router.post("/:idRepair/to-do", insertTodoCtrl);
 //
 router.get("/customer/:customerId/:repairsId", getRepairByCustomerByIdCtrl);
 router.post("/:id", insertRepairsCtrl);

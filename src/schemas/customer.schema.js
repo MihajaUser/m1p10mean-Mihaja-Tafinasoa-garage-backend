@@ -40,11 +40,12 @@ const CustomerSchema = new Schema(
               {
                 type: new Schema(
                   {
+                    status: { type: Boolean, required: true, default: false },
                     amount: { type: Number, required: true }
                   },
                   {
                     _id: false,
-                    timestamps: true
+                    timestamps: false
                   }
                 )
               }

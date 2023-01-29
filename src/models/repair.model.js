@@ -78,7 +78,7 @@ export const getUnconfirmedRepairMdl = async () => {
       //   }
       // }
     ]);
-  } catch (error) {}
+  } catch (error) { }
 };
 
 /*
@@ -106,7 +106,24 @@ export const confirmRepairMdl = async (data) => {
     console.log(error);
   }
 };
-
+export const insertTodoMdl = async (data) => {
+  try {
+    const customer = await CustomerModel.findById(data.customerId);
+    if (!customer) throw new Error('Customer not found');
+    const repair = customer.repairs.find((item) => item.id === data.repairId);
+    const tempArray = Array.prototype.concat(repair.to_do, data.toDo);
+    const repairIndex = customer.repairs.findIndex(item => item.id === data.repairId);
+    customer.repairs[repairIndex].to_do = tempArray;
+    console.log(customer.repairs[repairIndex])
+    customer.repairs[repairIndex].total_amount = customer.repairs[repairIndex].to_do.reduce((accumulator, object) => {
+      return accumulator + object.price;
+    }, 0);
+    await customer.save();
+    return { message: "insert todo successfully" }
+  } catch (error) {
+    console.log(error);
+  }
+}
 export const getRepairByCustomerAndRepairMdl = async (customerId, repairId) => {
   try {
     return await CustomerModel.aggregate([{ $match: { _id: customerId } }]);
@@ -155,3 +172,5 @@ export const getAllRepairMdl = async (query) => {
       .exec()
   };
 };
+
+

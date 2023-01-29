@@ -5,7 +5,8 @@ import {
   getRepairsByCustomerSvc,
   getUnconfirmedRepairSvc,
   getUnpaidRepairSvc,
-  insertRepairSvc
+  insertRepairSvc,
+  insertTodoSvc
 } from "../services/repair.service.js";
 /*
  * car depot
@@ -94,3 +95,7 @@ export const getUnpaidRepairCtrl = async (req, res) => {
       .send({ status: "FAILED", data: { error: error?.message || error } });
   }
 };
+export const insertTodoCtrl = async (req, res) => {
+  const data = await insertTodoSvc(req.body)
+  return res.status(200).json(data)
+}
