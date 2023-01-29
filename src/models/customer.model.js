@@ -42,3 +42,4 @@ export const paymentMdl = async data => {
     console.log(error);
   }
 };
+
