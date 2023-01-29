@@ -4,9 +4,9 @@ import {
   getRepairByCustomerAndRepairSvc,
   getRepairsByCustomerSvc,
   getUnconfirmedRepairSvc,
+  getUnpaidRepairSvc,
   insertRepairSvc
 } from "../services/repair.service.js";
-
 /*
  * car depot
  */
@@ -42,6 +42,7 @@ export const getUnconfirmedRepairsSvc = async (req, res) => {
       .send({ status: "FAILED", data: { error: error?.message || error } });
   }
 };
+
 /*
  * @params req :
  *  1-id of the customer
@@ -50,12 +51,14 @@ export const getUnconfirmedRepairsSvc = async (req, res) => {
  */
 export const confirmRepairCtrl = async (req, res) => {
   try {
+    console.log("Bonjour");
     const data = await confirmRepairSvc(req.body);
     return res.status(200).json(data);
   } catch (error) {
     console.log(error.status);
   }
 };
+
 export const getRepairByCustomerByIdCtrl = async (req, res) => {
   try {
     const data = await getRepairByCustomerAndRepairSvc(
@@ -73,6 +76,17 @@ export const getRepairByCustomerByIdCtrl = async (req, res) => {
 export const getAllRepairCtrl = async (req, res) => {
   try {
     const data = await getAllRepairSvc(req.query);
+    return res.status(200).json(data);
+  } catch (error) {
+    return res
+      .status(error?.status || 500)
+      .send({ status: "FAILED", data: { error: error?.message || error } });
+  }
+};
+
+export const getUnpaidRepairCtrl = async (req, res) => {
+  try {
+    const data = await getUnpaidRepairSvc(req.params.customerId);
     return res.status(200).json(data);
   } catch (error) {
     return res

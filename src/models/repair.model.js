@@ -31,7 +31,7 @@ export const getUnconfirmedRepairMdl = async () => {
             $filter: {
               input: "$repairs",
               as: "item",
-              cond: { $eq: ["$$item.is_confirmed", true] }
+              cond: { $eq: ["$$item.is_confirmed", false] }
             }
           }
         }
@@ -100,7 +100,7 @@ export const confirmRepairMdl = async (data) => {
     repair.to_do = tempArray;
     repair.payment = [];
     //
-    await customer.save();
+    return await customer.save();
   } catch (error) {
     console.log(error);
   }
@@ -108,15 +108,33 @@ export const confirmRepairMdl = async (data) => {
 
 export const getRepairByCustomerAndRepairMdl = async (customerId, repairId) => {
   try {
-    return await CustomerModel.aggregate([
-      // { $unwind: "$repairs" },
-      { $match: { _id: customerId } }
-    ]);
+    return await CustomerModel.aggregate([{ $match: { _id: customerId } }]);
   } catch (error) {
     console.log(error);
   }
 };
 
+export const getUnpaidRepairMdl = async (customerId) => {
+  try {
+    return await CustomerModel.aggregate([
+      { $match: { _id: customerId } },
+      {
+        $project: {
+          _id: "$_id",
+          firstname: "$firstname",
+          lastname: "$lastname",
+          repairs: {
+            $filter: {
+              input: "$repairs",
+              as: "item",
+              cond: { $lt: ["$$item.total_amount", "$$item.total_paid"] }
+            }
+          }
+        }
+      }
+    ]);
+  } catch (error) {}
+};
 //
 export const getAllRepairMdl = async (query) => {
   const _generatedQuery = LSHFilterQueryGenerator(query);

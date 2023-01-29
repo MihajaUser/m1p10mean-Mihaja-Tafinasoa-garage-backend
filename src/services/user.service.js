@@ -12,7 +12,6 @@ export const insertUserSvc = async (user) => {
     const hashed = await hash(user.password, salt);
     user.password = hashed;
     await insertUserMdl(user);
-    console.log("__________", user);
     confirmRegistrationMailSvc(user);
   } catch (error) {
     console.log(error);
@@ -54,6 +53,6 @@ export const loginUserSvc = async (useOnLog) => {
   return {
     token,
     user,
-    loggedAs: useOnLog.logAs,
+    loggedAs: useOnLog.logAs
   };
 };
