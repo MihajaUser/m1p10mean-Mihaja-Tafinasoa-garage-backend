@@ -1,5 +1,6 @@
 import { CustomerModel } from "../schemas/customer.schema.js";
 import { LSHFilterQueryGenerator } from "./../helpers/url.helper.js";
+import mongoose from "mongoose";
 /*
  * repairs
  */
@@ -116,24 +117,25 @@ export const getRepairByCustomerAndRepairMdl = async (customerId, repairId) => {
 
 export const getUnpaidRepairMdl = async (customerId) => {
   try {
+    console.log(customerId);
+
     return await CustomerModel.aggregate([
-      { $match: { _id: customerId } },
+      { $match: { _id: mongoose.Types.ObjectId(customerId) } },
       {
         $project: {
-          _id: "$_id",
-          firstname: "$firstname",
-          lastname: "$lastname",
           repairs: {
             $filter: {
               input: "$repairs",
               as: "item",
-              cond: { $lt: ["$$item.total_amount", "$$item.total_paid"] }
+              cond: { $gt: ["$$item.total_amount", "$$item.total_paid"] }
             }
           }
         }
       }
     ]);
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+  }
 };
 //
 export const getAllRepairMdl = async (query) => {
