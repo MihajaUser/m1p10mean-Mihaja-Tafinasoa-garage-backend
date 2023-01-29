@@ -8,7 +8,8 @@ import {
   getUnpaidRepairSvc,
   insertPaymentSvc,
   insertRepairSvc,
-  insertTodoSvc
+  insertTodoSvc,
+  validationToDoSvc
 } from "../services/repair.service.js";
 /*
  * car depot
@@ -130,3 +131,11 @@ export const geRetrievableCarByCustomerCtrl = async (req, res) => {
       .send({ status: "FAILED", data: { error: error?.message || error } });
   }
 };
+export const validationToDoCtrl = async (req, res) => {
+  try {
+    const data = await validationToDoSvc(req.body)
+    return res.status(200).json(data)
+  } catch (error) {
+    console.log(error);
+  }
+}
