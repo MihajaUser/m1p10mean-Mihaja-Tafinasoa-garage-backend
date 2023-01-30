@@ -54,6 +54,7 @@ export const checkRole = (roles, userType) => {
       if (!access) return res.status(401).send("invalid roles");
       else return next();
     } catch (error) {
+      console.log(error);
       return res.status(500).send("server error");
     }
   };

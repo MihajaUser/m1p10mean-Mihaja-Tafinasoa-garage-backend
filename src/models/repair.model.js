@@ -272,7 +272,15 @@ export const getAllUnpaidRepairsMdl = async () => {
             $filter: {
               input: "$repairs",
               as: "item",
-              cond: { $gt: ["$$item.total_amount", "$$item.total_paid"] }
+              cond: {
+                $and: [
+                  {
+                    $eq: ["$$item.is_done", true]
+                  },
+                  { $gt: ["$$item.total_amount", "$$item.total_paid"] },
+                  { $eq: ["$$item.is_retrieved", false] }
+                ]
+              }
             }
           }
         }

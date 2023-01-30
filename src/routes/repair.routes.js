@@ -54,7 +54,7 @@ router.get(
 );
 router.get(
   "/customer/:customerId",
-  [checkJwt, checkRole(["ctmr", "ra", "rf"])],
+  [checkJwt, checkRole(["ctmr", "ra", "rf"], 1)],
   getAllRepairByCustomerCtrl
 );
 
@@ -72,7 +72,7 @@ router.get(
 // * payment
 router.post(
   "/payment",
-  [checkJwt, checkRole(["ctmr", "ra", "rf"])],
+  [checkJwt, checkRole(["ctmr", "ra", "rf"], 1)],
   insertPaymentCtrl
 );
 // * cars
@@ -90,7 +90,7 @@ router.post(
 // * order
 router.get(
   "/customer/:customerId/:repairsId",
-  [checkJwt, checkRole(["ctmr", "ra", "rf"])],
+  // [checkJwt, checkRole(["ctmr", "ra", "rf"])],
   getRepairByCustomerByIdCtrl
 );
 router.post(
