@@ -78,11 +78,16 @@ export const getAllRepairCtrl = async (req, res) => {
       .send({ status: "FAILED", data: { error: error?.message || error } });
   }
 };
-
 export const getAllUndoneRepairCtrl = async (req, res) => {
   try {
     console.log("ctrl");
     const data = await getAllUndoneRepairsSvc();
+    return res.status(200).json(data);
+  } catch (error) {}
+};
+export const getAllRepairByCustomerCtrl = async (req, res) => {
+  try {
+    const data = await getRepairsByCustomerSvc(req.params.customerId);
     return res.status(200).json(data);
   } catch (error) {}
 };
@@ -109,7 +114,6 @@ export const getUndoneToDoCtrl = async (req, res) => {
   }
 };
 // * payment
-
 export const insertPaymentCtrl = async (req, res) => {
   try {
     const payment = await insertPaymentSvc(req.body);

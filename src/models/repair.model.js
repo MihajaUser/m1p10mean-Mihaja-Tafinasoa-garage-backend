@@ -1,7 +1,8 @@
 import { CustomerModel } from "../schemas/customer.schema.js";
 import { LSHFilterQueryGenerator } from "./../helpers/url.helper.js";
 import mongoose from "mongoose";
-//*
+
+//* repairs
 export const insertRepairMdl = async (customer, depot) => {
   try {
     customer.repairs.push(depot.repairs);
@@ -77,7 +78,6 @@ export const getUnconfirmedRepairMdl = async () => {
     ]);
   } catch (error) {}
 };
-//*
 export const confirmRepairMdl = async (data) => {
   try {
     const customer = await CustomerModel.findById(data.customerId);
@@ -99,7 +99,6 @@ export const confirmRepairMdl = async (data) => {
     console.log(error);
   }
 };
-//* repairs
 export const getRepairByCustomerAndRepairMdl = async (customerId, repairId) => {
   try {
     return await CustomerModel.aggregate([{ $match: { _id: customerId } }]);
@@ -107,7 +106,6 @@ export const getRepairByCustomerAndRepairMdl = async (customerId, repairId) => {
     console.log(error);
   }
 };
-
 export const getAllRepairMdl = async (query) => {
   const _generatedQuery = LSHFilterQueryGenerator(query);
   console.log(_generatedQuery);
@@ -197,6 +195,14 @@ export const getAllUndoneRepairsMdl = async () => {
       }
     }
   ]);
+};
+
+export const getRepairsByCustomerMdl = async (customerId) => {
+  try {
+    return await CustomerModel.aggregate([{ $match: { _id: customerId } }]);
+  } catch (error) {
+    console.log(error);
+  }
 };
 // * payment
 export const insertPaymentMdl = async (data) => {
