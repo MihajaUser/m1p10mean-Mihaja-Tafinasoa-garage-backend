@@ -49,7 +49,7 @@ router.post(
 );
 router.get(
   "/undone",
-  [checkJwt, checkRole(["ctmr", "ra", "rf"])],
+  //[checkJwt, checkRole(["ctmr", "ra", "rf"])],
   getAllUndoneRepairCtrl
 );
 router.get(
@@ -83,7 +83,7 @@ router.get(
 );
 router.post(
   "/recuperation/:customerId",
-  [checkJwt, checkRole(["ctmr", "ra", "rf"])],
+  // [checkJwt, checkRole(["ctmr", "ra", "rf"])],
   retrieveCarCtrl
 );
 
