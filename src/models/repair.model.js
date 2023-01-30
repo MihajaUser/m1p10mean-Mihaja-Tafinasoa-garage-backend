@@ -101,7 +101,22 @@ export const confirmRepairMdl = async (data) => {
 };
 export const getRepairByCustomerAndRepairMdl = async (customerId, repairId) => {
   try {
-    return await CustomerModel.aggregate([{ $match: { _id: customerId } }]);
+    return await CustomerModel.aggregate([
+      { $match: { _id: mongoose.Types.ObjectId(customerId) } },
+      {
+        $project: {
+          repairs: {
+            $filter: {
+              input: "$repairs",
+              as: "item",
+              cond: {
+                $eq: ["$$item._id", mongoose.Types.ObjectId(repairId)]
+              }
+            }
+          }
+        }
+      }
+    ]);
   } catch (error) {
     console.log(error);
   }
