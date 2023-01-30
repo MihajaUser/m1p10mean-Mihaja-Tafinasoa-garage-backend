@@ -1,20 +1,16 @@
 diag 
 
 a faire 
-   //avancement (affichage)
-   // insert paiement (affichage)
-    validation paiement (affichage)
-    facture(front back)
-    //back mij  liste recuperable (front back)
+    // avancement (affichage)
+    // back mij liste recuperable (front back)
         details 
     validation recuperation (front back)
-    stat 
-
+    // stat 
 
     //* 12h
     recherche 
     Real time 
     drag and drop (recuperation voiture)
-    securite url
+    secure url
     test  
     deploiement 

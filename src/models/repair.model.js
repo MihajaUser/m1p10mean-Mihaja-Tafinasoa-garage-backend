@@ -105,6 +105,8 @@ export const getRepairByCustomerAndRepairMdl = async (customerId, repairId) => {
       { $match: { _id: mongoose.Types.ObjectId(customerId) } },
       {
         $project: {
+          firstname: "$firstname",
+          lastname: "$lastname",
           repairs: {
             $filter: {
               input: "$repairs",

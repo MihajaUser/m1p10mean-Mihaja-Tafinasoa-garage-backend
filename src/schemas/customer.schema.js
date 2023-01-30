@@ -46,7 +46,7 @@ const CustomerSchema = new Schema(
                   },
                   {
                     _id: true,
-                    timestamps: false
+                    timestamps: true
                   }
                 )
               }

@@ -36,11 +36,13 @@ export const getRepairByCustomerCtrl = async (req, res) => {
       .send({ status: "FAILED", data: { error: error?.message || error } });
   }
 };
-export const getUnconfirmedRepairsSvc = async (req, res) => {
+export const getUnconfirmedRepairsCtrl = async (req, res) => {
   try {
+    console.log("ctrl");
     const data = await getUnconfirmedRepairSvc();
     return res.status(200).json(data);
   } catch (error) {
+    console.log("_____" + error);
     return res
       .status(error?.status || 500)
       .send({ status: "FAILED", data: { error: error?.message || error } });

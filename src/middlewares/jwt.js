@@ -1,6 +1,7 @@
 import config from "config";
 import { UserModel } from "../schemas/user.schema.js";
 import jwt from "jsonwebtoken";
+import { CustomerModel } from "../schemas/customer.schema.js";
 
 export const checkJwt = (req, res, next) => {
   // Get the jwt token from the head
@@ -16,41 +17,44 @@ export const checkJwt = (req, res, next) => {
     res.status(401).send("unauthorized");
     return;
   }
-
   // The token is valid for 1 hour
   // We want to send a new token on every request
   const { userId, username } = jwtPayload;
   const newToken = jwt.sign({ userId, username }, config.get("jwt.secret"), {
-    // eslint-disable-next-line comma-dangle
-    expiresIn: "1h",
+    expiresIn: "1h"
   });
   res.setHeader("token", newToken);
   // Call the next middleware or controller
   next();
 };
 
-export const checkRole = (roles) => {
+export const checkRole = (roles, userType) => {
   return async (req, res, next) => {
-    // Get the user ID from previous middleware
+    console.log(req.originalUrl + " " + userType);
     const id = res.locals.jwtPayload.userId;
     let user;
     try {
-      user = await UserModel.findById(id);
-    } catch (id) {
+      user =
+        userType === 1
+          ? await UserModel.findById(id)
+          : await CustomerModel.findById(id);
+    } catch (error) {
       return res.status(401).send("user not found");
     }
-    // Check if array of authorized roles includes the user's role
     let access = false;
-    roles.forEach((requiredRole) => {
-      user.roles.forEach((userRole) => {
-        if (requiredRole === userRole) {
-          access = true;
-          next();
-        }
+    try {
+      roles.forEach((requiredRole) => {
+        const userRoles = userType === 1 ? user.roles : user.credentials.roles;
+        userRoles.forEach((userRole) => {
+          if (requiredRole === userRole) {
+            access = true;
+          }
+        });
       });
-    });
-    console.log(roles, user.roles);
-    if (access) return;
-    else return res.status(401).send("invalid token");
+      if (!access) return res.status(401).send("invalid roles");
+      else return next();
+    } catch (error) {
+      return res.status(500).send("server error");
+    }
   };
 };
