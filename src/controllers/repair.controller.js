@@ -88,7 +88,7 @@ export const getAllUndoneRepairCtrl = async (req, res) => {
 export const getAllRepairByCustomerCtrl = async (req, res) => {
   try {
     const data = await getRepairsByCustomerSvc(req.params.customerId);
-    return res.status(200).json(data);
+    return res.status(200).json(data[0]);
   } catch (error) {}
 };
 // * todo

@@ -249,6 +249,8 @@ export const getAllUnpaidRepairsMdl = async () => {
     return await CustomerModel.aggregate([
       {
         $project: {
+          firstname: "$firstname",
+          lastname: "$lastname",
           repairs: {
             $filter: {
               input: "$repairs",
