@@ -2,7 +2,7 @@ diag
 
 a faire 
    //avancement (affichage)
-    insert paiement (affichage)
+   // insert paiement (affichage)
     validation paiement (affichage)
     facture(front back)
     //back mij  liste recuperable (front back)
