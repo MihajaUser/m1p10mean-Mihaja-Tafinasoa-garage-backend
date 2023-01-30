@@ -44,12 +44,12 @@ export const confirmRepairSvc = async (data) => {
 export const getRepairByCustomerAndRepairSvc = async (customerId, repairId) => {
   try {
     return await getRepairByCustomerAndRepairMdl(customerId, repairId);
-  } catch (error) {}
+  } catch (error) { }
 };
 export const getUnpaidRepairSvc = async (customerId) => {
   try {
     return await getUnpaidRepairMdl(customerId);
-  } catch (error) {}
+  } catch (error) { }
 };
 export const getAllRepairSvc = async (query) => {
   return await getAllRepairMdl(query);
@@ -65,7 +65,7 @@ export const getAllUndoneRepairsSvc = async () => {
 export const getRepairsByCustomer = async (customerId) => {
   try {
     return await getRepairsByCustomerMdl(customerId);
-  } catch (error) {}
+  } catch (error) { }
 };
 // * to do
 export const insertTodoSvc = async (query) => {
@@ -96,13 +96,13 @@ export const insertPaymentSvc = async (data) => {
 export const getAllUnpaidRepairSvc = async () => {
   try {
     return await getAllUnpaidRepairsMdl();
-  } catch (error) {}
+  } catch (error) { }
 };
 // * car
 export const getRetrievableCarByCustomerSvc = async (customerId) => {
   try {
     return await getRetrievableCarByCustomerMdl(customerId);
-  } catch (error) {}
+  } catch (error) { }
 };
 export const retrieveCarSvc = async (data) => {
   try {

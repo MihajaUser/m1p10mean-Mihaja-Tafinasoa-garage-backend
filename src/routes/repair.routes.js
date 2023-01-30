@@ -77,8 +77,8 @@ router.post(
 );
 // * cars
 router.get(
-  "retrievable/:customerId",
-  [checkJwt, checkRole(["ctmr", "ra", "rf"])],
+  "/retrievable/:customerId",
+  // [checkJwt, checkRole(["ctmr", "ra", "rf"], 0)],
   geRetrievableCarByCustomerCtrl
 );
 router.post(

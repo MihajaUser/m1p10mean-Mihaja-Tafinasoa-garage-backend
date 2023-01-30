@@ -76,7 +76,7 @@ export const getUnconfirmedRepairMdl = async () => {
       //   }
       // }
     ]);
-  } catch (error) {}
+  } catch (error) { }
 };
 export const confirmRepairMdl = async (data) => {
   try {
@@ -368,6 +368,8 @@ export const validationToDoMdl = async (data) => {
 // * car
 export const getRetrievableCarByCustomerMdl = async (customerId) => {
   try {
+    console.log("mihaja");
+    console.log(customerId);
     return await CustomerModel.aggregate([
       { $match: { _id: mongoose.Types.ObjectId(customerId) } },
       {
@@ -382,7 +384,7 @@ export const getRetrievableCarByCustomerMdl = async (customerId) => {
         }
       }
     ]);
-  } catch (error) {}
+  } catch (error) { }
 };
 export const retrieveCarMdl = async (data) => {
   try {
