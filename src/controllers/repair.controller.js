@@ -12,7 +12,8 @@ import {
   insertTodoSvc,
   validationToDoSvc,
   retrieveCarSvc,
-  getAllUndoneRepairsSvc
+  getAllUndoneRepairsSvc,
+  getAllUnpaidRepairSvc
 } from "../services/repair.service.js";
 // * repairs
 export const insertRepairsCtrl = async (req, res) => {
@@ -77,18 +78,10 @@ export const getAllRepairCtrl = async (req, res) => {
       .send({ status: "FAILED", data: { error: error?.message || error } });
   }
 };
-export const getUnpaidRepairCtrl = async (req, res) => {
-  try {
-    const data = await getUnpaidRepairSvc(req.params.customerId);
-    return res.status(200).json(data[0]);
-  } catch (error) {
-    return res
-      .status(error?.status || 500)
-      .send({ status: "FAILED", data: { error: error?.message || error } });
-  }
-};
+
 export const getAllUndoneRepairCtrl = async (req, res) => {
   try {
+    console.log("ctrl");
     const data = await getAllUndoneRepairsSvc();
     return res.status(200).json(data);
   } catch (error) {}
@@ -116,6 +109,7 @@ export const getUndoneToDoCtrl = async (req, res) => {
   }
 };
 // * payment
+
 export const insertPaymentCtrl = async (req, res) => {
   try {
     const payment = await insertPaymentSvc(req.body);
@@ -125,6 +119,22 @@ export const insertPaymentCtrl = async (req, res) => {
       .status(error?.status || 500)
       .send({ status: "FAILED", data: { error: error?.message || error } });
   }
+};
+export const getUnpaidRepairCtrl = async (req, res) => {
+  try {
+    const data = await getUnpaidRepairSvc(req.params.customerId);
+    return res.status(200).json(data[0]);
+  } catch (error) {
+    return res
+      .status(error?.status || 500)
+      .send({ status: "FAILED", data: { error: error?.message || error } });
+  }
+};
+export const getAllUnpaidRepairCtrl = async (req, res) => {
+  try {
+    const data = await getAllUnpaidRepairSvc();
+    return res.status(200).json(data);
+  } catch (error) {}
 };
 // * retrieving car
 export const geRetrievableCarByCustomerCtrl = async (req, res) => {

@@ -99,11 +99,121 @@ export const confirmRepairMdl = async (data) => {
     console.log(error);
   }
 };
-
 //* repairs
 export const getRepairByCustomerAndRepairMdl = async (customerId, repairId) => {
   try {
     return await CustomerModel.aggregate([{ $match: { _id: customerId } }]);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getAllRepairMdl = async (query) => {
+  const _generatedQuery = LSHFilterQueryGenerator(query);
+  console.log(_generatedQuery);
+  const page = query.page ? query.page : 1;
+  const step = query.step ? query.step : 5;
+  return {
+    total: await CustomerModel.countDocuments({
+      ..._generatedQuery
+    }),
+    candidates: await CustomerModel.find({
+      ..._generatedQuery
+    })
+      .limit(step * 1)
+      .skip((Number(page) - 1) * step)
+      .exec()
+  };
+};
+export const getAllUndoneRepairsMdl = async () => {
+  return await CustomerModel.aggregate([
+    {
+      $project: {
+        _id: "$_id",
+        firstname: "$firstname",
+        lastname: "$lastname",
+        repairs: {
+          $filter: {
+            input: "$repairs",
+            as: "item",
+            cond: {
+              $and: [
+                {
+                  $eq: ["$$item.is_done", false]
+                },
+                { $eq: ["$$item.is_retrieved", false] }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      $project: {
+        repairs: {
+          $map: {
+            input: "$repairs",
+            as: "repairs",
+            in: {
+              $mergeObjects: [
+                "$$repairs",
+                {
+                  undone: {
+                    $size: {
+                      $filter: {
+                        input: "$$repairs.to_do",
+                        as: "to_do",
+                        cond: {
+                          $eq: ["$$to_do.status", false]
+                        }
+                      }
+                    }
+                  },
+                  done: {
+                    $size: {
+                      $filter: {
+                        input: "$$repairs.to_do",
+                        as: "to_do",
+                        cond: {
+                          $eq: ["$$to_do.status", true]
+                        }
+                      }
+                    }
+                  },
+                  to_do: {
+                    $filter: {
+                      input: "$$repairs.to_do",
+                      as: "to_do",
+                      cond: {
+                        $eq: ["$$to_do.status", false]
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  ]);
+};
+// * payment
+export const insertPaymentMdl = async (data) => {
+  try {
+    const customer = await CustomerModel.findById(data.customerId);
+    if (!customer) throw new Error("Customer not found");
+    const repairIndex = customer.repairs.findIndex(
+      (item) => item.id === data.repairId
+    );
+    customer.repairs[repairIndex].payment.push(data.payment);
+    customer.repairs[repairIndex].total_paid = customer.repairs[
+      repairIndex
+    ].payment.reduce((accumulator, object) => {
+      return accumulator + object.amount;
+    }, 0);
+    console.log(customer.repairs[0]);
+    return await customer.save();
   } catch (error) {
     console.log(error);
   }
@@ -128,66 +238,24 @@ export const getUnpaidRepairMdl = async (customerId) => {
     console.log(error);
   }
 };
-export const getAllRepairMdl = async (query) => {
-  const _generatedQuery = LSHFilterQueryGenerator(query);
-  console.log(_generatedQuery);
-  const page = query.page ? query.page : 1;
-  const step = query.step ? query.step : 5;
-  return {
-    total: await CustomerModel.countDocuments({
-      ..._generatedQuery
-    }),
-    candidates: await CustomerModel.find({
-      ..._generatedQuery
-    })
-      .limit(step * 1)
-      .skip((Number(page) - 1) * step)
-      .exec()
-  };
-};
-export const insertPaymentMdl = async (data) => {
+export const getAllUnpaidRepairsMdl = async () => {
   try {
-    const customer = await CustomerModel.findById(data.customerId);
-    if (!customer) throw new Error("Customer not found");
-    const repairIndex = customer.repairs.findIndex(
-      (item) => item.id === data.repairId
-    );
-    customer.repairs[repairIndex].payment.push(data.payment);
-    customer.repairs[repairIndex].total_paid = customer.repairs[
-      repairIndex
-    ].payment.reduce((accumulator, object) => {
-      return accumulator + object.amount;
-    }, 0);
-    console.log(customer.repairs[0]);
-    return await customer.save();
-  } catch (error) {
-    console.log(error);
-  }
-};
-export const getAllUndoneRepairsMdl = async () => {
-  return await CustomerModel.aggregate([
-    {
-      $project: {
-        _id: "$_id",
-        firstname: "$firstname",
-        lastname: "$lastname",
-        repairs: {
-          $filter: {
-            input: "$repairs",
-            as: "item",
-            cond: {
-              $and: [
-                {
-                  $eq: ["$$repairs.is_done", false]
-                },
-                { $eq: ["$$repairs.is_retrieved", false] }
-              ]
+    return await CustomerModel.aggregate([
+      {
+        $project: {
+          repairs: {
+            $filter: {
+              input: "$repairs",
+              as: "item",
+              cond: { $gt: ["$$item.total_amount", "$$item.total_paid"] }
             }
           }
         }
       }
-    }
-  ]);
+    ]);
+  } catch (error) {
+    console.log(error);
+  }
 };
 // * todo
 export const insertTodoMdl = async (data) => {
@@ -228,9 +296,9 @@ export const getUnDoneTodoMdl = async () => {
                     to_do: {
                       $filter: {
                         input: "$$repairs.to_do",
-                        as: "toDo",
+                        as: "to_do",
                         cond: {
-                          $eq: ["$$toDo.status", false]
+                          $eq: ["$$to_do.status", false]
                         }
                       }
                     }

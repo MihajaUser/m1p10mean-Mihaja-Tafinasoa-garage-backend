@@ -13,7 +13,8 @@ import {
   getUnDoneTodoMdl,
   validationToDoMdl,
   retrieveCarMdl,
-  getAllUndoneRepairsMdl
+  getAllUndoneRepairsMdl,
+  getAllUnpaidRepairsMdl
 } from "../models/repair.model.js";
 
 // * repair
@@ -54,6 +55,7 @@ export const getAllRepairSvc = async (query) => {
 };
 export const getAllUndoneRepairsSvc = async () => {
   try {
+    console.log("svc");
     return await getAllUndoneRepairsMdl();
   } catch (error) {
     console.log(error);
@@ -84,6 +86,12 @@ export const insertPaymentSvc = async (data) => {
   } catch (error) {
     console.log(error);
   }
+};
+
+export const getAllUnpaidRepairSvc = async () => {
+  try {
+    return await getAllUnpaidRepairsMdl();
+  } catch (error) {}
 };
 // * car
 export const getRetrievableCarByCustomerSvc = async (customerId) => {
