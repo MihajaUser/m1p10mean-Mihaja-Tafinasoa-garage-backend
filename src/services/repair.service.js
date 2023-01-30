@@ -54,6 +54,7 @@ export const getAllRepairSvc = async (query) => {
 };
 export const getAllUndoneRepairsSvc = async () => {
   try {
+    console.log("svc");
     return await getAllUndoneRepairsMdl();
   } catch (error) {
     console.log(error);

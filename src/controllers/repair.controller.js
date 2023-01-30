@@ -89,6 +89,7 @@ export const getUnpaidRepairCtrl = async (req, res) => {
 };
 export const getAllUndoneRepairCtrl = async (req, res) => {
   try {
+    console.log("ctrl");
     const data = await getAllUndoneRepairsSvc();
     return res.status(200).json(data);
   } catch (error) {}

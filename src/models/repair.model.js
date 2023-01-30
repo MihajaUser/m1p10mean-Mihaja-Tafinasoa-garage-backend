@@ -165,6 +165,7 @@ export const insertPaymentMdl = async (data) => {
   }
 };
 export const getAllUndoneRepairsMdl = async () => {
+  console.log("mdl");
   return await CustomerModel.aggregate([
     {
       $project: {
@@ -178,9 +179,57 @@ export const getAllUndoneRepairsMdl = async () => {
             cond: {
               $and: [
                 {
-                  $eq: ["$$repairs.is_done", false]
+                  $eq: ["$$item.is_done", false]
                 },
-                { $eq: ["$$repairs.is_retrieved", false] }
+                { $eq: ["$$item.is_retrieved", false] }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      $project: {
+        repairs: {
+          $map: {
+            input: "$repairs",
+            as: "repairs",
+            in: {
+              $mergeObjects: [
+                "$$repairs",
+                {
+                  undone: {
+                    $size: {
+                      $filter: {
+                        input: "$$repairs.to_do",
+                        as: "to_do",
+                        cond: {
+                          $eq: ["$$to_do.status", false]
+                        }
+                      }
+                    }
+                  },
+                  done: {
+                    $size: {
+                      $filter: {
+                        input: "$$repairs.to_do",
+                        as: "to_do",
+                        cond: {
+                          $eq: ["$$to_do.status", true]
+                        }
+                      }
+                    }
+                  },
+                  to_do: {
+                    $filter: {
+                      input: "$$repairs.to_do",
+                      as: "to_do",
+                      cond: {
+                        $eq: ["$$to_do.status", false]
+                      }
+                    }
+                  }
+                }
               ]
             }
           }
@@ -228,9 +277,9 @@ export const getUnDoneTodoMdl = async () => {
                     to_do: {
                       $filter: {
                         input: "$$repairs.to_do",
-                        as: "toDo",
+                        as: "to_do",
                         cond: {
-                          $eq: ["$$toDo.status", false]
+                          $eq: ["$$to_do.status", false]
                         }
                       }
                     }
