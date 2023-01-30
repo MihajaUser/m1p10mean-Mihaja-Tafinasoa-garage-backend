@@ -6,7 +6,7 @@ a faire
         details 
     validation recuperation (front back)
     stat 
-
+    
     //* 12h
     recherche 
     Real time 
