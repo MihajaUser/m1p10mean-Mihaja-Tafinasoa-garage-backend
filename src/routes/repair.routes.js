@@ -54,7 +54,7 @@ router.get(
 );
 router.get(
   "/customer/:customerId",
-  [checkJwt, checkRole(["ctmr", "ra", "rf"], 1)],
+  // [checkJwt, checkRole(["ctmr", "ra", "rf"], 1)],
   getAllRepairByCustomerCtrl
 );
 
