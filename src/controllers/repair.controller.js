@@ -85,13 +85,13 @@ export const getAllUndoneRepairCtrl = async (req, res) => {
     console.log("ctrl");
     const data = await getAllUndoneRepairsSvc();
     return res.status(200).json(data);
-  } catch (error) { }
+  } catch (error) {}
 };
 export const getAllRepairByCustomerCtrl = async (req, res) => {
   try {
     const data = await getRepairsByCustomerSvc(req.params.customerId);
     return res.status(200).json(data[0]);
-  } catch (error) { }
+  } catch (error) {}
 };
 // * todo
 export const insertTodoCtrl = async (req, res) => {
@@ -138,9 +138,10 @@ export const getUnpaidRepairCtrl = async (req, res) => {
 };
 export const getAllUnpaidRepairCtrl = async (req, res) => {
   try {
+    console.log("bonjour");
     const data = await getAllUnpaidRepairSvc();
     return res.status(200).json(data);
-  } catch (error) { }
+  } catch (error) {}
 };
 // * retrieving car
 export const geRetrievableCarByCustomerCtrl = async (req, res) => {

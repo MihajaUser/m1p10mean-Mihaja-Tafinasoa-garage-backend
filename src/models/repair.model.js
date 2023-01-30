@@ -20,7 +20,6 @@ export const getRepairByCustomerMdl = async (id) => {
 export const getUnconfirmedRepairMdl = async () => {
   try {
     return await CustomerModel.aggregate([
-      // { $match: { "repairs.is_confirmed": false } },
       {
         $project: {
           _id: "$_id",
@@ -35,48 +34,8 @@ export const getUnconfirmedRepairMdl = async () => {
           }
         }
       }
-      // {
-      //   $project: {
-      //     _id: "$_id",
-      //     firstname: "$firstname",
-      //     lastname: "$lastname",
-      //     "repairs._id": "$repairs._id",
-      //     "repairs.created_at": "$repairs.createdAt",
-      //     "repairs.car.registration_number": "$repairs.car.registration_number",
-      //     "repairs.car.brand": "$repairs.car.brand",
-      //     "repairs.car.model": "$repairs.car.model"
-      //   }
-      // }
-      // {
-      //   $replaceWith: {
-      //     $arrayElemAt: [
-      //       {
-      //         $filter: {
-      //           input: "$repairs",
-      //           cond: { $eq: ["$$this.is_confirmed", true] }
-      //         }
-      //       },
-      //       0
-      //     ]
-      //   }
-      // }
-      // { $unwind: "$repairs" },
-      // { $match: { "repairs.is_confirmed": false } }
-      // ,
-      // {
-      //   $project: {
-      //     _id: "$_id",
-      //     firstname: "$firstname",
-      //     lastname: "$lastname",
-      //     "repairs._id": "$repairs._id",
-      //     "repairs.created_at": "$repairs.createdAt",
-      //     "repairs.car.registration_number": "$repairs.car.registration_number",
-      //     "repairs.car.brand": "$repairs.car.brand",
-      //     "repairs.car.model": "$repairs.car.model"
-      //   }
-      // }
     ]);
-  } catch (error) { }
+  } catch (error) {}
 };
 export const confirmRepairMdl = async (data) => {
   try {
@@ -213,7 +172,6 @@ export const getAllUndoneRepairsMdl = async () => {
     }
   ]);
 };
-
 export const getRepairsByCustomerMdl = async (customerId) => {
   try {
     return await CustomerModel.aggregate([{ $match: { _id: customerId } }]);
@@ -272,15 +230,7 @@ export const getAllUnpaidRepairsMdl = async () => {
             $filter: {
               input: "$repairs",
               as: "item",
-              cond: {
-                $and: [
-                  {
-                    $eq: ["$$item.is_done", true]
-                  },
-                  { $gt: ["$$item.total_amount", "$$item.total_paid"] },
-                  { $eq: ["$$item.is_retrieved", false] }
-                ]
-              }
+              cond: { $gt: ["$$item.total_amount", "$$item.total_paid"] }
             }
           }
         }
@@ -384,7 +334,7 @@ export const getRetrievableCarByCustomerMdl = async (customerId) => {
         }
       }
     ]);
-  } catch (error) { }
+  } catch (error) {}
 };
 export const retrieveCarMdl = async (data) => {
   try {
