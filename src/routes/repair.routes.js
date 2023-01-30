@@ -83,7 +83,7 @@ router.get(
 );
 router.post(
   "/recuperation/:customerId",
-  [checkJwt, checkRole(["ctmr", "ra", "rf"])],
+  // [checkJwt, checkRole(["ctmr", "ra", "rf"])],
   retrieveCarCtrl
 );
 
