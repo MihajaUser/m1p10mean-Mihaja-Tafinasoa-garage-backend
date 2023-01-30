@@ -1,7 +1,7 @@
 {
   "server": {
     "host": "localhost",
-    "port": 3000
+    "port": 3001
   },
   "database": {
     "uri": "mongodb+srv://Mihaja:sasukeuchiha!%40@clustergarage.evrvxdj.mongodb.net/?retryWrites=true&w=majority"
