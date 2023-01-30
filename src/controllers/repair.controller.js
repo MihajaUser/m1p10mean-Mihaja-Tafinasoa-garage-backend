@@ -57,12 +57,11 @@ export const confirmRepairCtrl = async (req, res) => {
 };
 export const getRepairByCustomerByIdCtrl = async (req, res) => {
   try {
-    console.log("Bonjour");
     const data = await getRepairByCustomerAndRepairSvc(
       req.params.customerId,
       req.params.repairsId
     );
-    return res.status(200).json(data);
+    return res.status(200).json(data[0]);
   } catch (error) {
     return res
       .status(error?.status || 500)
