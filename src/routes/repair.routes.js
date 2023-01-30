@@ -34,17 +34,17 @@ router.post(
 );
 router.get(
   "/unpaid/:customerId",
-  [checkJwt, checkRole(["ctmr", "ra", "rf"], 0)],
+  // [checkJwt, checkRole(["ctmr", "ra", "rf"], 0)],
   getUnpaidRepairCtrl
 );
 router.get(
   "/unpaid",
-  [checkJwt, checkRole(["ctmr", "ra", "rf"])],
+  // [checkJwt, checkRole(["ctmr", "ra", "rf"])],
   getAllUnpaidRepairCtrl
 );
 router.post(
   "/todo/:id/validation",
-  [checkJwt, checkRole(["ctmr", "ra", "rf"])],
+  [checkJwt, checkRole(["ctmr", "ra", "rf"], 1)],
   validationToDoCtrl
 );
 router.get(
@@ -86,6 +86,7 @@ router.post(
   [checkJwt, checkRole(["ctmr", "ra", "rf"])],
   retrieveCarCtrl
 );
+
 // * order
 router.get(
   "/customer/:customerId/:repairsId",
@@ -94,7 +95,7 @@ router.get(
 );
 router.post(
   "/:id",
-  [checkJwt, checkRole(["ctmr", "ra", "rf"])],
+  [checkJwt, checkRole(["ctmr", "ra", "rf"], 0)],
   insertRepairsCtrl
 );
 router.get(
