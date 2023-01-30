@@ -99,7 +99,6 @@ export const confirmRepairMdl = async (data) => {
     console.log(error);
   }
 };
-
 //* repairs
 export const getRepairByCustomerAndRepairMdl = async (customerId, repairId) => {
   try {
@@ -108,26 +107,7 @@ export const getRepairByCustomerAndRepairMdl = async (customerId, repairId) => {
     console.log(error);
   }
 };
-export const getUnpaidRepairMdl = async (customerId) => {
-  try {
-    return await CustomerModel.aggregate([
-      { $match: { _id: mongoose.Types.ObjectId(customerId) } },
-      {
-        $project: {
-          repairs: {
-            $filter: {
-              input: "$repairs",
-              as: "item",
-              cond: { $gt: ["$$item.total_amount", "$$item.total_paid"] }
-            }
-          }
-        }
-      }
-    ]);
-  } catch (error) {
-    console.log(error);
-  }
-};
+
 export const getAllRepairMdl = async (query) => {
   const _generatedQuery = LSHFilterQueryGenerator(query);
   console.log(_generatedQuery);
@@ -145,27 +125,7 @@ export const getAllRepairMdl = async (query) => {
       .exec()
   };
 };
-export const insertPaymentMdl = async (data) => {
-  try {
-    const customer = await CustomerModel.findById(data.customerId);
-    if (!customer) throw new Error("Customer not found");
-    const repairIndex = customer.repairs.findIndex(
-      (item) => item.id === data.repairId
-    );
-    customer.repairs[repairIndex].payment.push(data.payment);
-    customer.repairs[repairIndex].total_paid = customer.repairs[
-      repairIndex
-    ].payment.reduce((accumulator, object) => {
-      return accumulator + object.amount;
-    }, 0);
-    console.log(customer.repairs[0]);
-    return await customer.save();
-  } catch (error) {
-    console.log(error);
-  }
-};
 export const getAllUndoneRepairsMdl = async () => {
-  console.log("mdl");
   return await CustomerModel.aggregate([
     {
       $project: {
@@ -237,6 +197,65 @@ export const getAllUndoneRepairsMdl = async () => {
       }
     }
   ]);
+};
+// * payment
+export const insertPaymentMdl = async (data) => {
+  try {
+    const customer = await CustomerModel.findById(data.customerId);
+    if (!customer) throw new Error("Customer not found");
+    const repairIndex = customer.repairs.findIndex(
+      (item) => item.id === data.repairId
+    );
+    customer.repairs[repairIndex].payment.push(data.payment);
+    customer.repairs[repairIndex].total_paid = customer.repairs[
+      repairIndex
+    ].payment.reduce((accumulator, object) => {
+      return accumulator + object.amount;
+    }, 0);
+    console.log(customer.repairs[0]);
+    return await customer.save();
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const getUnpaidRepairMdl = async (customerId) => {
+  try {
+    return await CustomerModel.aggregate([
+      { $match: { _id: mongoose.Types.ObjectId(customerId) } },
+      {
+        $project: {
+          repairs: {
+            $filter: {
+              input: "$repairs",
+              as: "item",
+              cond: { $gt: ["$$item.total_amount", "$$item.total_paid"] }
+            }
+          }
+        }
+      }
+    ]);
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const getAllUnpaidRepairsMdl = async () => {
+  try {
+    return await CustomerModel.aggregate([
+      {
+        $project: {
+          repairs: {
+            $filter: {
+              input: "$repairs",
+              as: "item",
+              cond: { $gt: ["$$item.total_amount", "$$item.total_paid"] }
+            }
+          }
+        }
+      }
+    ]);
+  } catch (error) {
+    console.log(error);
+  }
 };
 // * todo
 export const insertTodoMdl = async (data) => {

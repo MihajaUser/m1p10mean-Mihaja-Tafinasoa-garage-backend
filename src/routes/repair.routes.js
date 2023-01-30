@@ -23,6 +23,7 @@ router.get("", getAllRepairCtrl);
 router.get("/unconfirmed", getUnconfirmedRepairsSvc);
 router.post("/confirm/:id", confirmRepairCtrl);
 router.get("/unpaid/:customerId", getUnpaidRepairCtrl);
+router.get("/unpaid");
 router.post("/todo/:id/validation", validationToDoCtrl);
 router.get("/undone", getAllUndoneRepairCtrl);
 // * do to
